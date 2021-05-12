@@ -1,12 +1,12 @@
 opendistro_security:
   audit:
-    type: com.amazon.opendistroforelasticsearch.security.auditlog.helper.SlowSink
+    type: SlowSink
     endpoints:
       endpoint1:
-        type: com.amazon.opendistroforelasticsearch.security.auditlog.helper.SlowSink
+        type: SlowSink
     routes:
       MISSING_PRIVILEGEs:
         endpoints:
           - endpoint1
     fallback:
-      type: com.amazon.opendistroforelasticsearch.security.auditlog.helper.LoggingSink          
+      type: LoggingSink
