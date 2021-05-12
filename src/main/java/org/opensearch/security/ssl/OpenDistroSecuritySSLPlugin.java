@@ -274,7 +274,7 @@ public class OpenDistroSecuritySSLPlugin extends Plugin implements SystemIndexPl
         
         Map<String, Supplier<Transport>> transports = new HashMap<String, Supplier<Transport>>();
         if (transportSSLEnabled) {
-            transports.put("com.amazon.opendistroforelasticsearch.security.ssl.http.netty.OpenDistroSecuritySSLNettyTransport",
+            transports.put("org.opensearch.security.ssl.http.netty.OpenDistroSecuritySSLNettyTransport",
                     () -> new OpenDistroSecuritySSLNettyTransport(settings, Version.CURRENT, threadPool, networkService, pageCacheRecycler, namedWriteableRegistry, circuitBreakerService, odsks, NOOP_SSL_EXCEPTION_HANDLER, sharedGroupFactory,
                         openDistroSSLConfig));
 
@@ -408,7 +408,7 @@ public class OpenDistroSecuritySSLPlugin extends Plugin implements SystemIndexPl
        }
         
        if (transportSSLEnabled) {
-           builder.put(NetworkModule.TRANSPORT_TYPE_KEY, "com.amazon.opendistroforelasticsearch.security.ssl.http.netty.OpenDistroSecuritySSLNettyTransport");
+           builder.put(NetworkModule.TRANSPORT_TYPE_KEY, "org.opensearch.security.ssl.http.netty.OpenDistroSecuritySSLNettyTransport");
        }
         
         return builder.build();

@@ -670,7 +670,7 @@ public final class OpenDistroSecurityPlugin extends OpenDistroSecuritySSLPlugin 
         }
 
         if (transportSSLEnabled) {
-            transports.put("com.amazon.opendistroforelasticsearch.security.ssl.http.netty.OpenDistroSecuritySSLNettyTransport",
+            transports.put("org.opensearch.security.ssl.http.netty.OpenDistroSecuritySSLNettyTransport",
                     () -> new OpenDistroSecuritySSLNettyTransport(settings, Version.CURRENT, threadPool, networkService, pageCacheRecycler,
                             namedWriteableRegistry, circuitBreakerService, odsks, evaluateSslExceptionHandler(), sharedGroupFactory, openDistroSSLConfig));
         }
@@ -849,7 +849,7 @@ public final class OpenDistroSecurityPlugin extends OpenDistroSecuritySSLPlugin 
         builder.put(super.additionalSettings());
 
         if(!openDistroSSLConfig.isSslOnlyMode()){
-          builder.put(NetworkModule.TRANSPORT_TYPE_KEY, "com.amazon.opendistroforelasticsearch.security.ssl.http.netty.OpenDistroSecuritySSLNettyTransport");
+          builder.put(NetworkModule.TRANSPORT_TYPE_KEY, "org.opensearch.security.ssl.http.netty.OpenDistroSecuritySSLNettyTransport");
           builder.put(NetworkModule.HTTP_TYPE_KEY, "OpenDistroSecurityHttpServerTransport");
         }
         return builder.build();
