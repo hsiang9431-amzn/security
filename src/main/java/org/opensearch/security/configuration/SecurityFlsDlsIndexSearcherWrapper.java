@@ -39,7 +39,7 @@ import org.opensearch.security.support.OpenDistroSecurityUtils;
 
 import com.google.common.collect.Sets;
 
-public class OpenDistroSecurityFlsDlsIndexSearcherWrapper extends OpenDistroSecurityIndexSearcherWrapper {
+public class SecurityFlsDlsIndexSearcherWrapper extends SecurityIndexSearcherWrapper {
 
     // TODO: the list is outdated. It is necessary to change how meta fields are handled in the near future.
     //  We may consider using MapperService.isMetadataField() instead of relying on the static set or
@@ -53,9 +53,9 @@ public class OpenDistroSecurityFlsDlsIndexSearcherWrapper extends OpenDistroSecu
     private final LongSupplier nowInMillis;
     private final Salt salt;
 
-    public OpenDistroSecurityFlsDlsIndexSearcherWrapper(final IndexService indexService, final Settings settings,
-            final AdminDNs adminDNs, final ClusterService clusterService, final AuditLog auditlog,
-            final ComplianceIndexingOperationListener ciol, final PrivilegesEvaluator evaluator, final Salt salt) {
+    public SecurityFlsDlsIndexSearcherWrapper(final IndexService indexService, final Settings settings,
+                                              final AdminDNs adminDNs, final ClusterService clusterService, final AuditLog auditlog,
+                                              final ComplianceIndexingOperationListener ciol, final PrivilegesEvaluator evaluator, final Salt salt) {
         super(indexService, settings, adminDNs, evaluator);
         ciol.setIs(indexService);
         this.clusterService = clusterService;

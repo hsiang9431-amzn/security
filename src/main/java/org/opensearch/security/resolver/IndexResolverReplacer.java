@@ -91,7 +91,7 @@ import org.opensearch.transport.RemoteClusterService;
 import org.opensearch.transport.TransportRequest;
 import org.greenrobot.eventbus.Subscribe;
 
-import org.opensearch.security.OpenDistroSecurityPlugin;
+import org.opensearch.security.SecurityPlugin;
 import org.opensearch.security.support.SnapshotRestoreHelper;
 import org.opensearch.security.support.WildcardMatcher;
 
@@ -188,11 +188,11 @@ public class IndexResolverReplacer {
             Set<String> remoteIndices;
             final List<String> localRequestedPatterns = new ArrayList<>(Arrays.asList(original));
 
-            final RemoteClusterService remoteClusterService = OpenDistroSecurityPlugin.GuiceHolder.getRemoteClusterService();
+            final RemoteClusterService remoteClusterService = SecurityPlugin.GuiceHolder.getRemoteClusterService();
 
             if(remoteClusterService.isCrossClusterSearchEnabled() && enableCrossClusterResolution) {
                 remoteIndices = new HashSet<>();
-                final Map<String, OriginalIndices> remoteClusterIndices = OpenDistroSecurityPlugin.GuiceHolder.getRemoteClusterService()
+                final Map<String, OriginalIndices> remoteClusterIndices = SecurityPlugin.GuiceHolder.getRemoteClusterService()
                         .groupIndices(indicesOptions, original, idx -> resolver.hasIndexAbstraction(idx, clusterService.state()));
                 final Set<String> remoteClusters = remoteClusterIndices.keySet().stream()
                         .filter(k->!RemoteClusterService.LOCAL_CLUSTER_GROUP_KEY.equals(k)).collect(Collectors.toSet());

@@ -125,7 +125,7 @@ import org.opensearch.transport.Netty4Plugin;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.opensearch.security.DefaultObjectMapper;
-import org.opensearch.security.OpenDistroSecurityPlugin;
+import org.opensearch.security.SecurityPlugin;
 import org.opensearch.security.securityconf.impl.v7.ActionGroupsV7;
 import org.opensearch.security.securityconf.impl.v7.ConfigV7;
 import org.opensearch.security.securityconf.impl.v7.InternalUserV7;
@@ -517,7 +517,7 @@ public class OpenDistroSecurityAdmin {
                 Settings settings = settingsBuilder.build();  
 
         try (@SuppressWarnings("resource")
-        TransportClient tc = new TransportClientImpl(settings, asCollection(Netty4Plugin.class, OpenDistroSecurityPlugin.class))
+        TransportClient tc = new TransportClientImpl(settings, asCollection(Netty4Plugin.class, SecurityPlugin.class))
                 .addTransportAddress(new TransportAddress(new InetSocketAddress(hostname, port)))) {
 
             

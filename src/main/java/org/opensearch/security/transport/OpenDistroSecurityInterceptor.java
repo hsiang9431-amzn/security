@@ -62,7 +62,7 @@ import org.opensearch.transport.TransportRequestOptions;
 import org.opensearch.transport.TransportResponse;
 import org.opensearch.transport.TransportResponseHandler;
 
-import org.opensearch.security.OpenDistroSecurityPlugin;
+import org.opensearch.security.SecurityPlugin;
 import org.opensearch.security.auditlog.AuditLog;
 import org.opensearch.security.auditlog.AuditLog.Origin;
 import org.opensearch.security.auth.BackendRegistry;
@@ -72,7 +72,7 @@ import org.opensearch.security.support.ConfigConstants;
 import org.opensearch.security.user.User;
 import com.google.common.collect.Maps;
 
-import static org.opensearch.security.OpenDistroSecurityPlugin.isActionTraceEnabled;
+import static org.opensearch.security.SecurityPlugin.isActionTraceEnabled;
 
 public class OpenDistroSecurityInterceptor {
 
@@ -142,7 +142,7 @@ public class OpenDistroSecurityInterceptor {
                             || k.startsWith(ConfigConstants.OPENDISTRO_SECURITY_INITIAL_ACTION_CLASS_HEADER)
             )));
 
-            if (OpenDistroSecurityPlugin.GuiceHolder.getRemoteClusterService().isCrossClusterSearchEnabled()
+            if (SecurityPlugin.GuiceHolder.getRemoteClusterService().isCrossClusterSearchEnabled()
                     && clusterInfoHolder.isInitialized()
                     && (action.equals(ClusterSearchShardsAction.NAME)
                     || action.equals(SearchAction.NAME)
@@ -156,7 +156,7 @@ public class OpenDistroSecurityInterceptor {
                 headerMap.remove(ConfigConstants.OPENDISTRO_SECURITY_FLS_FIELDS_HEADER);
             }
 
-            if (OpenDistroSecurityPlugin.GuiceHolder.getRemoteClusterService().isCrossClusterSearchEnabled()
+            if (SecurityPlugin.GuiceHolder.getRemoteClusterService().isCrossClusterSearchEnabled()
                     && clusterInfoHolder.isInitialized()
                     && !action.startsWith("internal:")
                     && !action.equals(ClusterSearchShardsAction.NAME)

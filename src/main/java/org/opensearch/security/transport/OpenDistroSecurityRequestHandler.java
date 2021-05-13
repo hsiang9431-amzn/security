@@ -65,7 +65,7 @@ import org.opensearch.security.support.HeaderHelper;
 import org.opensearch.security.user.User;
 import com.google.common.base.Strings;
 
-import static org.opensearch.security.OpenDistroSecurityPlugin.isActionTraceEnabled;
+import static org.opensearch.security.SecurityPlugin.isActionTraceEnabled;
 
 public class OpenDistroSecurityRequestHandler<T extends TransportRequest> extends OpenDistroSecuritySSLRequestHandler<T> {
 

@@ -51,7 +51,7 @@ import org.opensearch.security.auditlog.NullAuditLog;
 import org.opensearch.security.auditlog.impl.AuditLogImpl;
 import org.opensearch.security.compliance.ComplianceIndexingOperationListenerImpl;
 import org.opensearch.security.configuration.DlsFlsValveImpl;
-import org.opensearch.security.configuration.OpenDistroSecurityFlsDlsIndexSearcherWrapper;
+import org.opensearch.security.configuration.SecurityFlsDlsIndexSearcherWrapper;
 import org.opensearch.security.configuration.PrivilegesInterceptorImpl;
 import org.opensearch.security.configuration.Salt;
 import org.opensearch.security.dlic.rest.api.OpenDistroSecurityRestApiActions;
@@ -124,9 +124,9 @@ import org.opensearch.security.auditlog.AuditLog;
 import org.opensearch.security.auditlog.AuditLogSslExceptionHandler;
 import org.opensearch.security.auth.BackendRegistry;
 import org.opensearch.security.compliance.ComplianceIndexingOperationListener;
-import org.opensearch.security.filter.OpenDistroSecurityFilter;
+import org.opensearch.security.filter.SecurityFilter;
 import org.opensearch.security.filter.OpenDistroSecurityRestFilter;
-import org.opensearch.security.http.OpenDistroSecurityHttpServerTransport;
+import org.opensearch.security.http.SecurityHttpServerTransport;
 import org.opensearch.security.http.OpenDistroSecurityNonSslHttpServerTransport;
 import org.opensearch.security.http.XFFResolver;
 import org.opensearch.security.privileges.PrivilegesEvaluator;
@@ -174,11 +174,11 @@ import org.opensearch.security.support.ReflectionHelper;
 import org.opensearch.security.support.WildcardMatcher;
 import com.google.common.collect.Lists;
 
-public final class OpenDistroSecurityPlugin extends OpenDistroSecuritySSLPlugin implements ClusterPlugin, MapperPlugin {
+public final class SecurityPlugin extends OpenDistroSecuritySSLPlugin implements ClusterPlugin, MapperPlugin {
 
     private static final String KEYWORD = ".keyword";
     private static final Logger actionTrace = LogManager.getLogger("opendistro_security_action_trace");
-    private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(OpenDistroSecurityPlugin.class);
+    private static final DeprecationLogger deprecationLogger = DeprecationLogger.getLogger(SecurityPlugin.class);
 
     private boolean sslCertReloadEnabled;
     private volatile OpenDistroSecurityRestFilter securityRestHandler;
@@ -194,7 +194,7 @@ public final class OpenDistroSecurityPlugin extends OpenDistroSecuritySSLPlugin 
     private volatile Client localClient;
     private final boolean disabled;
     private final List<String> demoCertHashes = new ArrayList<String>(3);
-    private volatile OpenDistroSecurityFilter odsf;
+    private volatile SecurityFilter odsf;
     private volatile IndexResolverReplacer irr;
     private volatile NamedXContentRegistry namedXContentRegistry = null;
     private volatile DlsFlsRequestValve dlsFlsValve = null;
@@ -241,7 +241,7 @@ public final class OpenDistroSecurityPlugin extends OpenDistroSecuritySSLPlugin 
         return settings.getAsBoolean(ConfigConstants.OPENDISTRO_SECURITY_SSL_CERT_RELOAD_ENABLED, false);
     }
 
-    public OpenDistroSecurityPlugin(final Settings settings, final Path configPath) {
+    public SecurityPlugin(final Settings settings, final Path configPath) {
         super(settings, configPath, isDisabled(settings));
 
         disabled = isDisabled(settings);
@@ -493,7 +493,7 @@ public final class OpenDistroSecurityPlugin extends OpenDistroSecuritySSLPlugin 
             final ComplianceIndexingOperationListener ciol = new ComplianceIndexingOperationListenerImpl(auditLog);
             indexModule.addIndexOperationListener(ciol);
 
-            indexModule.setReaderWrapper(indexService -> new OpenDistroSecurityFlsDlsIndexSearcherWrapper(indexService, settings, adminDns, cs, auditLog, ciol, evaluator, salt));
+            indexModule.setReaderWrapper(indexService -> new SecurityFlsDlsIndexSearcherWrapper(indexService, settings, adminDns, cs, auditLog, ciol, evaluator, salt));
             indexModule.forceQueryCacheProvider((indexSettings,nodeCache)->new QueryCache() {
 
                 @Override
@@ -692,7 +692,7 @@ public final class OpenDistroSecurityPlugin extends OpenDistroSecuritySSLPlugin 
                 final ValidatingDispatcher validatingDispatcher = new ValidatingDispatcher(threadPool.getThreadContext(), dispatcher,
                         settings, configPath, evaluateSslExceptionHandler());
                 //TODO close odshst
-                final OpenDistroSecurityHttpServerTransport odshst = new OpenDistroSecurityHttpServerTransport(settings, networkService, bigArrays,
+                final SecurityHttpServerTransport odshst = new SecurityHttpServerTransport(settings, networkService, bigArrays,
                         threadPool, odsks, evaluateSslExceptionHandler(), xContentRegistry, validatingDispatcher, clusterSettings, sharedGroupFactory);
 
                 return Collections.singletonMap("org.opensearch.security.http.OpenDistroSecurityHttpServerTransport",
@@ -784,7 +784,7 @@ public final class OpenDistroSecurityPlugin extends OpenDistroSecuritySSLPlugin 
         evaluator = new PrivilegesEvaluator(clusterService, threadPool, cr, resolver, auditLog,
                 settings, privilegesInterceptor, cih, irr, dlsFlsEnabled);
 
-        odsf = new OpenDistroSecurityFilter(localClient, settings, evaluator, adminDns, dlsFlsValve, auditLog, threadPool, cs, compatConfig, irr, backendRegistry);
+        odsf = new SecurityFilter(localClient, settings, evaluator, adminDns, dlsFlsValve, auditLog, threadPool, cs, compatConfig, irr, backendRegistry);
 
         final String principalExtractorClass = settings.get(SSLConfigConstants.OPENDISTRO_SECURITY_SSL_TRANSPORT_PRINCIPAL_EXTRACTOR_CLASS, null);
 

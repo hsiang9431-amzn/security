@@ -43,11 +43,11 @@ import org.opensearch.transport.SharedGroupFactory;
 import org.opensearch.security.ssl.OpenDistroSecurityKeyStore;
 import org.opensearch.security.ssl.SslExceptionHandler;
 
-public class OpenDistroSecurityHttpServerTransport extends OpenDistroSecuritySSLNettyHttpServerTransport {
+public class SecurityHttpServerTransport extends OpenDistroSecuritySSLNettyHttpServerTransport {
     
-    public OpenDistroSecurityHttpServerTransport(final Settings settings, final NetworkService networkService,
-                                                 final BigArrays bigArrays, final ThreadPool threadPool, final OpenDistroSecurityKeyStore odsks,
-                                                 final SslExceptionHandler sslExceptionHandler, final NamedXContentRegistry namedXContentRegistry, final ValidatingDispatcher dispatcher, final ClusterSettings clusterSettings, SharedGroupFactory sharedGroupFactory) {
+    public SecurityHttpServerTransport(final Settings settings, final NetworkService networkService,
+                                       final BigArrays bigArrays, final ThreadPool threadPool, final OpenDistroSecurityKeyStore odsks,
+                                       final SslExceptionHandler sslExceptionHandler, final NamedXContentRegistry namedXContentRegistry, final ValidatingDispatcher dispatcher, final ClusterSettings clusterSettings, SharedGroupFactory sharedGroupFactory) {
         super(settings, networkService, bigArrays, threadPool, odsks, namedXContentRegistry, dispatcher, sslExceptionHandler, clusterSettings, sharedGroupFactory);
     }
 }

@@ -97,7 +97,7 @@ import org.opensearch.security.user.User;
 
 import com.google.common.collect.Sets;
 
-import static org.opensearch.security.OpenDistroSecurityPlugin.traceAction;
+import static org.opensearch.security.SecurityPlugin.traceAction;
 import static org.opensearch.security.support.ConfigConstants.OPENDISTRO_SECURITY_USER_INFO_THREAD_CONTEXT;
 
 public class PrivilegesEvaluator {

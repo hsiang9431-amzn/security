@@ -98,10 +98,10 @@ import org.opensearch.security.support.HeaderHelper;
 import org.opensearch.security.support.SourceFieldsContext;
 import org.opensearch.security.user.User;
 
-import static org.opensearch.security.OpenDistroSecurityPlugin.isActionTraceEnabled;
-import static org.opensearch.security.OpenDistroSecurityPlugin.traceAction;
+import static org.opensearch.security.SecurityPlugin.isActionTraceEnabled;
+import static org.opensearch.security.SecurityPlugin.traceAction;
 
-public class OpenDistroSecurityFilter implements ActionFilter {
+public class SecurityFilter implements ActionFilter {
 
     protected final Logger log = LogManager.getLogger(this.getClass());
     private final PrivilegesEvaluator evalp;
@@ -117,9 +117,9 @@ public class OpenDistroSecurityFilter implements ActionFilter {
     private final Client client;
     private final BackendRegistry backendRegistry;
 
-    public OpenDistroSecurityFilter(final Client client, final Settings settings, final PrivilegesEvaluator evalp, final AdminDNs adminDns,
-            DlsFlsRequestValve dlsFlsValve, AuditLog auditLog, ThreadPool threadPool, ClusterService cs,
-            final CompatConfig compatConfig, final IndexResolverReplacer indexResolverReplacer, BackendRegistry backendRegistry) {
+    public SecurityFilter(final Client client, final Settings settings, final PrivilegesEvaluator evalp, final AdminDNs adminDns,
+                          DlsFlsRequestValve dlsFlsValve, AuditLog auditLog, ThreadPool threadPool, ClusterService cs,
+                          final CompatConfig compatConfig, final IndexResolverReplacer indexResolverReplacer, BackendRegistry backendRegistry) {
         this.client = client;
         this.evalp = evalp;
         this.adminDns = adminDns;

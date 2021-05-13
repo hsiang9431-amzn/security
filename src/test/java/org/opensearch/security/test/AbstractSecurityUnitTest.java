@@ -55,7 +55,7 @@ import org.opensearch.client.transport.TransportClient;
 import org.opensearch.common.settings.Settings;
 import org.opensearch.common.transport.TransportAddress;
 import org.opensearch.plugins.Plugin;
-import org.opensearch.security.OpenDistroSecurityPlugin;
+import org.opensearch.security.SecurityPlugin;
 import org.opensearch.security.action.configupdate.ConfigUpdateAction;
 import org.opensearch.security.action.configupdate.ConfigUpdateRequest;
 import org.opensearch.security.action.configupdate.ConfigUpdateResponse;
@@ -148,7 +148,7 @@ public abstract class AbstractSecurityUnitTest {
                 .put(initTransportClientSettings)
                 .build();
 
-        TransportClient tc = new TransportClientImpl(tcSettings, asCollection(Netty4Plugin.class, OpenDistroSecurityPlugin.class));
+        TransportClient tc = new TransportClientImpl(tcSettings, asCollection(Netty4Plugin.class, SecurityPlugin.class));
         tc.addTransportAddress(new TransportAddress(new InetSocketAddress(info.nodeHost, info.nodePort)));
         return tc;
     }
@@ -167,7 +167,7 @@ public abstract class AbstractSecurityUnitTest {
                 .put(initTransportClientSettings)
                 .build();
 
-        TransportClient tc = new TransportClientImpl(tcSettings, asCollection(Netty4Plugin.class, OpenDistroSecurityPlugin.class));
+        TransportClient tc = new TransportClientImpl(tcSettings, asCollection(Netty4Plugin.class, SecurityPlugin.class));
         tc.addTransportAddress(new TransportAddress(new InetSocketAddress(info.nodeHost, info.nodePort)));
         return tc;
     }

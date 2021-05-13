@@ -51,7 +51,7 @@ import org.opensearch.common.unit.TimeValue;
 import org.opensearch.common.xcontent.XContentType;
 import org.opensearch.node.Node;
 import org.opensearch.node.PluginAwareNode;
-import org.opensearch.security.OpenDistroSecurityPlugin;
+import org.opensearch.security.SecurityPlugin;
 import org.opensearch.security.ssl.util.ExceptionUtils;
 import org.opensearch.security.ssl.util.SSLConfigConstants;
 import org.opensearch.security.support.ConfigConstants;
@@ -503,7 +503,7 @@ public class SSLTest extends SingleClusterTest {
 
         final Settings tcSettings = Settings.builder().put("cluster.name", clusterInfo.clustername).put(settings).build();
 
-        try (TransportClient tc = new TransportClientImpl(tcSettings, asCollection(OpenDistroSecurityPlugin.class))) {
+        try (TransportClient tc = new TransportClientImpl(tcSettings, asCollection(SecurityPlugin.class))) {
             
             log.debug("TransportClient built, connect now to {}:{}", clusterInfo.nodeHost, clusterInfo.nodePort);
             
@@ -561,7 +561,7 @@ public class SSLTest extends SingleClusterTest {
         sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
         ExternalOpenDistroSecurityKeyStore.registerExternalSslContext("abcx", sslContext);
         
-        try (TransportClient tc = new TransportClientImpl(tcSettings, asCollection(OpenDistroSecurityPlugin.class))) {
+        try (TransportClient tc = new TransportClientImpl(tcSettings, asCollection(SecurityPlugin.class))) {
             
             log.debug("TransportClient built, connect now to {}:{}", clusterInfo.nodeHost, clusterInfo.nodePort);
             
@@ -619,7 +619,7 @@ public class SSLTest extends SingleClusterTest {
                 .put(settings)// -----
                 .build();
 
-        try (Node node = new PluginAwareNode(false, tcSettings, Netty4Plugin.class, OpenDistroSecurityPlugin.class).start()) {
+        try (Node node = new PluginAwareNode(false, tcSettings, Netty4Plugin.class, SecurityPlugin.class).start()) {
             ClusterHealthResponse res = node.client().admin().cluster().health(new ClusterHealthRequest().waitForNodes("4").timeout(TimeValue.timeValueSeconds(15))).actionGet();
             Assert.assertFalse(res.isTimedOut());
             Assert.assertEquals(4, res.getNumberOfNodes());
@@ -655,7 +655,7 @@ public class SSLTest extends SingleClusterTest {
                 .put("opendistro_security.ssl.transport.enforce_hostname_verification", false)
                 .put("opendistro_security.ssl.transport.resolve_hostname", false).build();
 
-        try (TransportClient tc = new TransportClientImpl(tcSettings, asCollection(OpenDistroSecurityPlugin.class))) {
+        try (TransportClient tc = new TransportClientImpl(tcSettings, asCollection(SecurityPlugin.class))) {
             tc.addTransportAddress(new TransportAddress(new InetSocketAddress(clusterInfo.nodeHost, clusterInfo.nodePort)));
             Assert.assertEquals(3, tc.admin().cluster().nodesInfo(new NodesInfoRequest()).actionGet().getNodes().size());
         }
@@ -720,7 +720,7 @@ public class SSLTest extends SingleClusterTest {
 
         final Settings tcSettings = Settings.builder().put("cluster.name", clusterInfo.clustername).put("path.home", ".").put(settings).build();
 
-        try (TransportClient tc = new TransportClientImpl(tcSettings, asCollection(OpenDistroSecurityPlugin.class))) {
+        try (TransportClient tc = new TransportClientImpl(tcSettings, asCollection(SecurityPlugin.class))) {
             
             log.debug("TransportClient built, connect now to {}:{}", clusterInfo.nodeHost, clusterInfo.nodePort);
             
@@ -840,7 +840,7 @@ public class SSLTest extends SingleClusterTest {
                 .put(settings)// -----
                 .build();
 
-        try (Node node = new PluginAwareNode(false, tcSettings, Netty4Plugin.class, OpenDistroSecurityPlugin.class).start()) {
+        try (Node node = new PluginAwareNode(false, tcSettings, Netty4Plugin.class, SecurityPlugin.class).start()) {
             ClusterHealthResponse res = node.client().admin().cluster().health(new ClusterHealthRequest().waitForNodes("4").timeout(TimeValue.timeValueSeconds(5))).actionGet();
             Assert.assertFalse(res.isTimedOut());
             Assert.assertEquals(4, res.getNumberOfNodes());

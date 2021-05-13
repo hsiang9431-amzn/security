@@ -47,7 +47,7 @@ import org.opensearch.snapshots.SnapshotInfo;
 import org.opensearch.snapshots.SnapshotUtils;
 import org.opensearch.threadpool.ThreadPool;
 
-import org.opensearch.security.OpenDistroSecurityPlugin;
+import org.opensearch.security.SecurityPlugin;
 
 public class SnapshotRestoreHelper {
 
@@ -67,7 +67,7 @@ public class SnapshotRestoreHelper {
     }
     
     public static SnapshotInfo getSnapshotInfo(RestoreSnapshotRequest restoreRequest) {
-        final RepositoriesService repositoriesService = Objects.requireNonNull(OpenDistroSecurityPlugin.GuiceHolder.getRepositoriesService(), "RepositoriesService not initialized");     
+        final RepositoriesService repositoriesService = Objects.requireNonNull(SecurityPlugin.GuiceHolder.getRepositoriesService(), "RepositoriesService not initialized");
         final Repository repository = repositoriesService.repository(restoreRequest.repository());
         final String threadName = Thread.currentThread().getName();
         SnapshotInfo snapshotInfo = null;

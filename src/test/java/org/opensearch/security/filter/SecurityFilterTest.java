@@ -42,12 +42,12 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 @RunWith(Parameterized.class)
-public class OpenDistroSecurityFilterTest {
+public class SecurityFilterTest {
 
     private final Settings settings;
     private final WildcardMatcher expected;
 
-    public OpenDistroSecurityFilterTest(Settings settings, WildcardMatcher expected) {
+    public SecurityFilterTest(Settings settings, WildcardMatcher expected) {
         this.settings = settings;
         this.expected = expected;
     }
@@ -69,7 +69,7 @@ public class OpenDistroSecurityFilterTest {
 
     @Test
     public void testImmutableIndicesWildcardMatcher() {
-        final OpenDistroSecurityFilter filter = new OpenDistroSecurityFilter(
+        final SecurityFilter filter = new SecurityFilter(
                 mock(Client.class),
                 settings,
                 mock(PrivilegesEvaluator.class),
