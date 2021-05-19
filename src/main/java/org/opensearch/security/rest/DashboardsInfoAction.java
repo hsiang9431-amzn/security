@@ -59,7 +59,10 @@ import com.google.common.collect.ImmutableList;
 public class DashboardsInfoAction extends BaseRestHandler {
     private static final List<Route> routes = ImmutableList.of(
             new Route(GET, "/_opendistro/_security/kibanainfo"),
-            new Route(POST, "/_opendistro/_security/kibanainfo")
+            new Route(POST, "/_opendistro/_security/kibanainfo"),
+
+            new Route(GET, "/_plugins/_security/kibanainfo"),
+            new Route(POST, "/_plugins/_security/kibanainfo")
     );
 
     private final Logger log = LogManager.getLogger(this.getClass());

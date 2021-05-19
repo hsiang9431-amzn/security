@@ -69,7 +69,10 @@ import com.google.common.collect.ImmutableList;
 public class TenantInfoAction extends BaseRestHandler {
     private static final List<Route> routes = ImmutableList.of(
             new Route(GET, "/_opendistro/_security/tenantinfo"),
-            new Route(POST, "/_opendistro/_security/tenantinfo")
+            new Route(POST, "/_opendistro/_security/tenantinfo"),
+
+            new Route(GET, "/_plugins/_security/tenantinfo"),
+            new Route(POST, "/_plugins/_security/tenantinfo")
     );
 
     private final Logger log = LogManager.getLogger(this.getClass());

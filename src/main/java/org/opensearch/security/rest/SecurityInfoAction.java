@@ -65,7 +65,10 @@ import com.google.common.collect.ImmutableList;
 public class SecurityInfoAction extends BaseRestHandler {
     private static final List<Route> routes = ImmutableList.of(
             new Route(GET, "/_opendistro/_security/authinfo"),
-            new Route(POST, "/_opendistro/_security/authinfo")
+            new Route(POST, "/_opendistro/_security/authinfo"),
+
+            new Route(GET, "/_plugins/_security/authinfo"),
+            new Route(POST, "/_plugins/_security/authinfo")
     );
 
     private final Logger log = LogManager.getLogger(this.getClass());

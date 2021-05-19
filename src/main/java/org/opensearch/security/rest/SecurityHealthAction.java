@@ -53,7 +53,10 @@ import com.google.common.collect.ImmutableList;
 public class SecurityHealthAction extends BaseRestHandler {
     private static final List<Route> routes = ImmutableList.of(
             new Route(GET, "/_opendistro/_security/health"),
-            new Route(POST, "/_opendistro/_security/health")
+            new Route(POST, "/_opendistro/_security/health"),
+
+            new Route(GET, "/_plugins/_security/health"),
+            new Route(POST, "/_plugins/_security/health")
     );
 
     private final BackendRegistry registry;

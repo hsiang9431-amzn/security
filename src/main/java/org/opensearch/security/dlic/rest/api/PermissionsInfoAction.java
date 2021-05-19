@@ -46,12 +46,15 @@ import org.opensearch.security.support.ConfigConstants;
 import org.opensearch.security.user.User;
 import org.opensearch.threadpool.ThreadPool;
 
+import com.google.common.collect.ImmutableList;
+
 /**
  * Provides the evaluated REST API permissions for the currently logged in user
  */
 public class PermissionsInfoAction extends BaseRestHandler {
-	private static final List<Route> routes = Collections.singletonList(
-			new Route(Method.GET, "/_opendistro/_security/api/permissionsinfo")
+	private static final List<Route> routes = ImmutableList.of(
+			new Route(Method.GET, "/_opendistro/_security/api/permissionsinfo"),
+			new Route(Method.GET, "/_plugins/_security/api/permissionsinfo")
 	);
 
 	private final RestApiPrivilegesEvaluator restApiPrivilegesEvaluator;
