@@ -141,13 +141,15 @@ public class HTTPSamlAuthenticator implements HTTPAuthenticator, Destroyable {
     @Override
     public AuthCredentials extractCredentials(RestRequest restRequest, ThreadContext threadContext)
             throws OpenSearchSecurityException {
-        if ("/_opendistro/_security/api/authtoken".equals(restRequest.path())) {
+        if ("/_opendistro/_security/api/authtoken".equals(restRequest.path()) ||
+                "/_plugins/_security/api/authtoken".equals(restRequest.path())) {
             return null;
         }
 
         AuthCredentials authCredentials = this.httpJwtAuthenticator.extractCredentials(restRequest, threadContext);
 
-        if ("/_opendistro/_security/authinfo".equals(restRequest.path())) {
+        if ("/_opendistro/_security/authinfo".equals(restRequest.path()) ||
+                "/_plugins/_security/api/authinfo".equals(restRequest.path())) {
             this.initLogoutUrl(restRequest, threadContext, authCredentials);
         }
 
@@ -164,7 +166,8 @@ public class HTTPSamlAuthenticator implements HTTPAuthenticator, Destroyable {
         try {
             RestRequest restRequest = restChannel.request();
 
-            if ("/_opendistro/_security/api/authtoken".equals(restRequest.path())
+            if (("/_opendistro/_security/api/authtoken".equals(restRequest.path()) ||
+                    "/_plugins/_security/api/authtoken".equals(restRequest.path()) )
                     && this.authTokenProcessorHandler.handle(restRequest, restChannel)) {
                 return true;
             }

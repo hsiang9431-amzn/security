@@ -32,7 +32,7 @@ public class DashboardsInfoActionTest extends AbstractRestApiUnitTest {
 
         rh.keystore = "restapi/kirk-keystore.jks";
         rh.sendAdminCertificate = true;
-        RestHelper.HttpResponse response = rh.executeGetRequest("_opendistro/_security/kibanainfo");
+        RestHelper.HttpResponse response = rh.executeGetRequest("_opendistro/_security/dashboardsinfo");
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusCode());
 
         response = rh.executePostRequest("/_opendistro/_security/api/securityconfig", "{\"xxx\": 1}", new Header[0]);
@@ -47,7 +47,7 @@ public class DashboardsInfoActionTest extends AbstractRestApiUnitTest {
 
         rh.keystore = "restapi/kirk-keystore.jks";
         rh.sendAdminCertificate = true;
-        RestHelper.HttpResponse response = rh.executeGetRequest("_plugins/_security/kibanainfo");
+        RestHelper.HttpResponse response = rh.executeGetRequest("_plugins/_security/dashboardsinfo");
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusCode());
 
         response = rh.executePostRequest("/_plugins/_security/api/securityconfig", "{\"xxx\": 1}", new Header[0]);
