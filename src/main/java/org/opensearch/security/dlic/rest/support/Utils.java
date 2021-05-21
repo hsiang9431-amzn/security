@@ -218,9 +218,10 @@ public class Utils {
     }
 
     /**
-     * Add prefixes to rest API routes
+     * Add prefixes(_opendistro... and _plugins...) to rest API routes
      * @param routes routes
-     * @return new list of API routes
+     * @return new list of API routes prefixed with _opendistro... and _plugins...
+     *Total number of routes is expanded as twice as the number of routes passed in
      */
     public static List<Route> addRoutesPrefix(List<Route> routes){
         List<Route> prefixedRoutes = new ArrayList<>();
@@ -232,10 +233,11 @@ public class Utils {
     }
 
     /**
-     * Add prefix to rest API routes
+     * Add customized prefix(_opendistro... and _plugins...)to API rest routes
      * @param routes routes
      * @param prefixes all api prefix
-     * @return new list of API routes
+     * @return new list of API routes prefixed with the strings listed in prefixes
+     * Total number of routes will be expanded len(prefixes) as much comparing to the list passed in
      */
     public static List<Route> addRoutesPrefix(List<Route> routes, final String... prefixes){
         List<Route> prefixedRoutes = new ArrayList<>();
