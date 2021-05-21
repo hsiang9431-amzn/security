@@ -46,17 +46,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class SecurityConfigAction extends PatchableResourceApiAction {
 
-    private static final List<Route> getRoutes = ImmutableList.of(
-            new Route(Method.GET, "/_opendistro/_security/api/securityconfig/"),
-            new Route(Method.GET, "/_plugins/_security/api/securityconfig/")
+    private static final List<Route> getRoutes = Collections.singletonList(
+            new Route(Method.GET, "/securityconfig/")
     );
 
     private static final List<Route> allRoutes = new ImmutableList.Builder<Route>()
             .addAll(getRoutes)
-            .add(new Route(Method.PUT, "/_opendistro/_security/api/securityconfig/{name}"))
-            .add(new Route(Method.PATCH, "/_opendistro/_security/api/securityconfig/"))
-            .add(new Route(Method.PUT, "/_plugins/_security/api/securityconfig/{name}"))
-            .add(new Route(Method.PATCH, "/_plugins/_security/api/securityconfig/"))
+            .add(new Route(Method.PUT, "/securityconfig/{name}"))
+            .add(new Route(Method.PATCH, "/securityconfig/"))
             .build();
 
     private final boolean allowPutOrPatch;
@@ -72,8 +69,9 @@ public class SecurityConfigAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return allowPutOrPatch ? allRoutes : getRoutes;
-    }
+        List<Route> getPrefixedRotes = super.addRoutesPrefix(getRoutes);
+        List<Route> allPrefixedRotes = super.addRoutesPrefix(allRoutes);
+        return allowPutOrPatch ? allPrefixedRotes : getPrefixedRotes; }
 
     @Override
     protected void handleGet(RestChannel channel, RestRequest request, Client client, final JsonNode content) throws IOException{

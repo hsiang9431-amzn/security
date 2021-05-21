@@ -45,9 +45,8 @@ import com.google.common.collect.ImmutableList;
 
 
 public class AuthTokenProcessorAction extends AbstractApiAction {
-	private static final List<Route> routes = ImmutableList.of(
-			new Route(Method.POST, "/_opendistro/_security/api/authtoken"),
-			new Route(Method.POST, "/_plugins/_security/api/authtoken")
+	private static final List<Route> routes = Collections.singletonList(
+			new Route(Method.POST, "/authtoken")
 	);
 
 	@Inject
@@ -61,7 +60,7 @@ public class AuthTokenProcessorAction extends AbstractApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return routes;
+		return super.addRoutesPrefix(routes);
 	}
 
 	@Override

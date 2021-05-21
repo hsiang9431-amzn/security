@@ -88,13 +88,9 @@ import java.util.List;
  */
 public class WhitelistApiAction extends PatchableResourceApiAction {
     private static final List<Route> routes = ImmutableList.of(
-            new Route(RestRequest.Method.GET, "/_opendistro/_security/api/whitelist"),
-            new Route(RestRequest.Method.PUT, "/_opendistro/_security/api/whitelist"),
-            new Route(RestRequest.Method.PATCH, "/_opendistro/_security/api/whitelist"),
-
-            new Route(RestRequest.Method.GET, "/_plugins/_security/api/whitelist"),
-            new Route(RestRequest.Method.PUT, "/_plugins/_security/api/whitelist"),
-            new Route(RestRequest.Method.PATCH, "/_plugins/_security/api/whitelist")
+            new Route(RestRequest.Method.GET, "/whitelist"),
+            new Route(RestRequest.Method.PUT, "/whitelist"),
+            new Route(RestRequest.Method.PATCH, "/whitelist")
     );
 
     private static final String name = "config";
@@ -158,7 +154,7 @@ public class WhitelistApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return routes;
+        return super.addRoutesPrefix(routes);
     }
 
     @Override

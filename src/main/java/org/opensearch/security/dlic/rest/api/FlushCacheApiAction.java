@@ -48,15 +48,10 @@ import com.google.common.collect.ImmutableList;
 
 public class FlushCacheApiAction extends AbstractApiAction {
 	private static final List<Route> routes = ImmutableList.of(
-			new Route(Method.DELETE, "/_opendistro/_security/api/cache"),
-			new Route(Method.GET, "/_opendistro/_security/api/cache"),
-			new Route(Method.PUT, "/_opendistro/_security/api/cache"),
-			new Route(Method.POST, "/_opendistro/_security/api/cache"),
-
-			new Route(Method.DELETE, "/_plugins/_security/api/cache"),
-			new Route(Method.GET, "/_plugins/_security/api/cache"),
-			new Route(Method.PUT, "/_plugins/_security/api/cache"),
-			new Route(Method.POST, "/_plugins/_security/api/cache")
+			new Route(Method.DELETE, "/cache"),
+			new Route(Method.GET, "/cache"),
+			new Route(Method.PUT, "/cache"),
+			new Route(Method.POST, "/cache")
 	);
 
 	@Inject
@@ -68,7 +63,7 @@ public class FlushCacheApiAction extends AbstractApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return routes;
+		return super.addRoutesPrefix(routes);
 	}
 
 	@Override

@@ -53,30 +53,19 @@ import static org.opensearch.security.dlic.rest.support.Utils.hash;
 
 public class InternalUsersApiAction extends PatchableResourceApiAction {
     private static final List<Route> routes = ImmutableList.of(
-            new Route(Method.GET, "/_opendistro/_security/api/user/{name}"),
-            new Route(Method.GET, "/_opendistro/_security/api/user/"),
-            new Route(Method.DELETE, "/_opendistro/_security/api/user/{name}"),
-            new Route(Method.PUT, "/_opendistro/_security/api/user/{name}"),
-
-            new Route(Method.GET, "/_plugins/_security/api/user/{name}"),
-            new Route(Method.GET, "/_plugins/_security/api/user/"),
-            new Route(Method.DELETE, "/_plugins/_security/api/user/{name}"),
-            new Route(Method.PUT, "/_plugins/_security/api/user/{name}"),
+            new Route(Method.GET, "/user/{name}"),
+            new Route(Method.GET, "/user/"),
+            new Route(Method.DELETE, "/user/{name}"),
+            new Route(Method.PUT, "/user/{name}"),
 
             // corrected mapping, introduced in OpenSearch Security
-            new Route(Method.GET, "/_opendistro/_security/api/internalusers/{name}"),
-            new Route(Method.GET, "/_opendistro/_security/api/internalusers/"),
-            new Route(Method.DELETE, "/_opendistro/_security/api/internalusers/{name}"),
-            new Route(Method.PUT, "/_opendistro/_security/api/internalusers/{name}"),
-            new Route(Method.PATCH, "/_opendistro/_security/api/internalusers/"),
-            new Route(Method.PATCH, "/_opendistro/_security/api/internalusers/{name}"),
+            new Route(Method.GET, "/internalusers/{name}"),
+            new Route(Method.GET, "/internalusers/"),
+            new Route(Method.DELETE, "/internalusers/{name}"),
+            new Route(Method.PUT, "/internalusers/{name}"),
+            new Route(Method.PATCH, "/internalusers/"),
+            new Route(Method.PATCH, "/internalusers/{name}")
 
-            new Route(Method.GET, "/_plugins/_security/api/internalusers/{name}"),
-            new Route(Method.GET, "/_plugins/_security/api/internalusers/"),
-            new Route(Method.DELETE, "/_plugins/_security/api/internalusers/{name}"),
-            new Route(Method.PUT, "/_plugins/_security/api/internalusers/{name}"),
-            new Route(Method.PATCH, "/_plugins/_security/api/internalusers/"),
-            new Route(Method.PATCH, "/_plugins/_security/api/internalusers/{name}")
     );
 
     @Inject
@@ -90,7 +79,7 @@ public class InternalUsersApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return routes;
+        return super.addRoutesPrefix(routes);
     }
 
     @Override

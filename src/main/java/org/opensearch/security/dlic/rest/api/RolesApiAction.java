@@ -41,19 +41,12 @@ import com.google.common.collect.ImmutableList;
 
 public class RolesApiAction extends PatchableResourceApiAction {
 	private static final List<Route> routes = ImmutableList.of(
-			new Route(Method.GET, "/_opendistro/_security/api/roles/"),
-			new Route(Method.GET, "/_opendistro/_security/api/roles/{name}"),
-			new Route(Method.DELETE, "/_opendistro/_security/api/roles/{name}"),
-			new Route(Method.PUT, "/_opendistro/_security/api/roles/{name}"),
-			new Route(Method.PATCH, "/_opendistro/_security/api/roles/"),
-			new Route(Method.PATCH, "/_opendistro/_security/api/roles/{name}"),
-
-			new Route(Method.GET, "/_plugins/_security/api/roles/"),
-			new Route(Method.GET, "/_plugins/_security/api/roles/{name}"),
-			new Route(Method.DELETE, "/_plugins/_security/api/roles/{name}"),
-			new Route(Method.PUT, "/_plugins/_security/api/roles/{name}"),
-			new Route(Method.PATCH, "/_plugins/_security/api/roles/"),
-			new Route(Method.PATCH, "/_plugins/_security/api/roles/{name}")
+			new Route(Method.GET, "/roles/"),
+			new Route(Method.GET, "/roles/{name}"),
+			new Route(Method.DELETE, "/roles/{name}"),
+			new Route(Method.PUT, "/roles/{name}"),
+			new Route(Method.PATCH, "/roles/"),
+			new Route(Method.PATCH, "/roles/{name}")
 	);
 
 	@Inject
@@ -64,7 +57,7 @@ public class RolesApiAction extends PatchableResourceApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return routes;
+		return super.addRoutesPrefix(routes);
 	}
 
 	@Override

@@ -18,8 +18,10 @@ package org.opensearch.security.dlic.rest.api;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.List;
 
 import org.opensearch.security.DefaultObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -68,6 +70,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.opensearch.security.securityconf.impl.CType;
 import org.opensearch.security.securityconf.impl.SecurityDynamicConfiguration;
+
+import com.google.common.collect.ImmutableList;
 
 public abstract class AbstractApiAction extends BaseRestHandler {
 
@@ -608,5 +612,14 @@ public abstract class AbstractApiAction extends BaseRestHandler {
 			return false;
 		}
 		return true;
+	}
+
+	protected List<Route> addRoutesPrefix(List<Route> routes){
+		List<Route> prefixedRoutes = new ArrayList<>();
+		for(Route route : routes){
+			prefixedRoutes.add(new Route(route.getMethod(), "/_opendistro/_security/api" + route.getPath()));
+			prefixedRoutes.add(new Route(route.getMethod(), "/_plugins/_security/api" + route.getPath()));
+		}
+		return prefixedRoutes;
 	}
 }

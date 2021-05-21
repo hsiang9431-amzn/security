@@ -52,9 +52,8 @@ import com.google.common.collect.ImmutableList;
  * Provides the evaluated REST API permissions for the currently logged in user
  */
 public class PermissionsInfoAction extends BaseRestHandler {
-	private static final List<Route> routes = ImmutableList.of(
-			new Route(Method.GET, "/_opendistro/_security/api/permissionsinfo"),
-			new Route(Method.GET, "/_plugins/_security/api/permissionsinfo")
+	private static final List<Route> routes  = Collections.singletonList(
+			new Route(Method.GET, "/permissionsinfo")
 	);
 
 	private final RestApiPrivilegesEvaluator restApiPrivilegesEvaluator;
@@ -79,7 +78,7 @@ public class PermissionsInfoAction extends BaseRestHandler {
 
 	@Override
 	public List<Route> routes() {
-		return routes;
+		return addRoutesPrefix(routes);
 	}
 
 	@Override
@@ -140,6 +139,16 @@ public class PermissionsInfoAction extends BaseRestHandler {
             }
         };
 
+	}
+
+	protected List<Route> addRoutesPrefix(List<Route> routes){
+		List<Route> prefixedRoutes = new java.util.ArrayList<>();
+		for(Route route : routes){
+			prefixedRoutes.add(new Route(route.getMethod(), "/_opendistro/_security/api" + route.getPath()));
+			prefixedRoutes.add(new Route(route.getMethod(), "/_plugins/_security/api" + route.getPath()));
+		}
+
+		return prefixedRoutes;
 	}
 
 }

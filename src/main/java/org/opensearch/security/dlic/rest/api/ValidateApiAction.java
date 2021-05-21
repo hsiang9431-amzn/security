@@ -59,9 +59,8 @@ import org.opensearch.security.securityconf.impl.v7.TenantV7;
 import com.google.common.collect.ImmutableList;
 
 public class ValidateApiAction extends AbstractApiAction {
-    private static final List<Route> routes = ImmutableList.of(
-            new Route(Method.GET, "/_opendistro/_security/api/validate"),
-            new Route(Method.GET, "/_plugins/_security/api/validate")
+    private static final List<Route> routes = Collections.singletonList(
+            new Route(Method.GET, "/validate")
     );
 
     @Inject
@@ -73,7 +72,7 @@ public class ValidateApiAction extends AbstractApiAction {
 
     @Override
     public List<Route> routes() {
-        return routes;
+        return super.addRoutesPrefix(routes);
     }
 
     @Override

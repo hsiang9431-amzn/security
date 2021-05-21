@@ -46,19 +46,12 @@ import org.opensearch.security.securityconf.impl.CType;
 
 public class RolesMappingApiAction extends PatchableResourceApiAction {
 	private static final List<Route> routes = ImmutableList.of(
-			new Route(Method.GET, "/_opendistro/_security/api/rolesmapping/"),
-			new Route(Method.GET, "/_opendistro/_security/api/rolesmapping/{name}"),
-			new Route(Method.DELETE, "/_opendistro/_security/api/rolesmapping/{name}"),
-			new Route(Method.PUT, "/_opendistro/_security/api/rolesmapping/{name}"),
-			new Route(Method.PATCH, "/_opendistro/_security/api/rolesmapping/"),
-			new Route(Method.PATCH, "/_opendistro/_security/api/rolesmapping/{name}"),
-
-			new Route(Method.GET, "/_plugins/_security/api/rolesmapping/"),
-			new Route(Method.GET, "/_plugins/_security/api/rolesmapping/{name}"),
-			new Route(Method.DELETE, "/_plugins/_security/api/rolesmapping/{name}"),
-			new Route(Method.PUT, "/_plugins/_security/api/rolesmapping/{name}"),
-			new Route(Method.PATCH, "/_plugins/_security/api/rolesmapping/"),
-			new Route(Method.PATCH, "/_plugins/_security/api/rolesmapping/{name}")
+			new Route(Method.GET, "/rolesmapping/"),
+			new Route(Method.GET, "/rolesmapping/{name}"),
+			new Route(Method.DELETE, "/rolesmapping/{name}"),
+			new Route(Method.PUT, "/rolesmapping/{name}"),
+			new Route(Method.PATCH, "/rolesmapping/"),
+			new Route(Method.PATCH, "/rolesmapping/{name}")
 	);
 
 	@Inject
@@ -100,7 +93,7 @@ public class RolesMappingApiAction extends PatchableResourceApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return routes;
+		return super.addRoutesPrefix(routes);
 	}
 
 	@Override

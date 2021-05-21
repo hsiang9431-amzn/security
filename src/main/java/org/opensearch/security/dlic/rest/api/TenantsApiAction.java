@@ -56,19 +56,12 @@ import com.google.common.collect.ImmutableList;
 
 public class TenantsApiAction extends PatchableResourceApiAction {
     private static final List<Route> routes = ImmutableList.of(
-            new Route(Method.GET, "/_opendistro/_security/api/tenants/{name}"),
-            new Route(Method.GET, "/_opendistro/_security/api/tenants/"),
-            new Route(Method.DELETE, "/_opendistro/_security/api/tenants/{name}"),
-            new Route(Method.PUT, "/_opendistro/_security/api/tenants/{name}"),
-            new Route(Method.PATCH, "/_opendistro/_security/api/tenants/"),
-            new Route(Method.PATCH, "/_opendistro/_security/api/tenants/{name}"),
-
-            new Route(Method.GET, "/_plugins/_security/api/tenants/{name}"),
-            new Route(Method.GET, "/_plugins/_security/api/tenants/"),
-            new Route(Method.DELETE, "/_plugins/_security/api/tenants/{name}"),
-            new Route(Method.PUT, "/_plugins/_security/api/tenants/{name}"),
-            new Route(Method.PATCH, "/_plugins/_security/api/tenants/"),
-            new Route(Method.PATCH, "/_plugins/_security/api/tenants/{name}")
+            new Route(Method.GET, "/tenants/{name}"),
+            new Route(Method.GET, "/tenants/"),
+            new Route(Method.DELETE, "/tenants/{name}"),
+            new Route(Method.PUT, "/tenants/{name}"),
+            new Route(Method.PATCH, "/tenants/"),
+            new Route(Method.PATCH, "/tenants/{name}")
     );
 
     @Inject
@@ -80,7 +73,7 @@ public class TenantsApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return routes;
+        return super.addRoutesPrefix(routes);
     }
 
     @Override

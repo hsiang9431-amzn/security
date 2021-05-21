@@ -63,19 +63,12 @@ public class NodesDnApiAction extends PatchableResourceApiAction {
     private final List<String> staticNodesDnFromEsYml;
 
     private static final List<Route> routes = ImmutableList.of(
-            new Route(Method.GET, "/_opendistro/_security/api/nodesdn/{name}"),
-            new Route(Method.GET, "/_opendistro/_security/api/nodesdn/"),
-            new Route(Method.DELETE, "/_opendistro/_security/api/nodesdn/{name}"),
-            new Route(Method.PUT, "/_opendistro/_security/api/nodesdn/{name}"),
-            new Route(Method.PATCH, "/_opendistro/_security/api/nodesdn/"),
-            new Route(Method.PATCH, "/_opendistro/_security/api/nodesdn/{name}"),
-
-            new Route(Method.GET, "/_plugins/_security/api/nodesdn/{name}"),
-            new Route(Method.GET, "/_plugins/_security/api/nodesdn/"),
-            new Route(Method.DELETE, "/_plugins/_security/api/nodesdn/{name}"),
-            new Route(Method.PUT, "/_plugins/_security/api/nodesdn/{name}"),
-            new Route(Method.PATCH, "/_plugins/_security/api/nodesdn/"),
-            new Route(Method.PATCH, "/_plugins/_security/api/nodesdn/{name}")
+            new Route(Method.GET, "/nodesdn/{name}"),
+            new Route(Method.GET, "/nodesdn/"),
+            new Route(Method.DELETE, "/nodesdn/{name}"),
+            new Route(Method.PUT, "/nodesdn/{name}"),
+            new Route(Method.PATCH, "/nodesdn/"),
+            new Route(Method.PATCH, "/nodesdn/{name}")
     );
 
     @Inject
@@ -89,7 +82,7 @@ public class NodesDnApiAction extends PatchableResourceApiAction {
     @Override
     public List<Route> routes() {
         if (settings.getAsBoolean(ConfigConstants.OPENDISTRO_SECURITY_NODES_DN_DYNAMIC_CONFIG_ENABLED, false)) {
-            return routes;
+            return super.addRoutesPrefix(routes);
         }
         return Collections.emptyList();
     }

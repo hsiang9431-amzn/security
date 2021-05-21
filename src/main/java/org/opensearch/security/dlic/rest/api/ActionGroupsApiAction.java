@@ -42,32 +42,21 @@ import com.google.common.collect.ImmutableList;
 public class ActionGroupsApiAction extends PatchableResourceApiAction {
 
 	private static final List<Route> routes = ImmutableList.of(
-			// legacy mapping for backwards compatibility
-			// TODO: remove in next version
-			new Route(Method.GET, "/_opendistro/_security/api/actiongroup/{name}"),
-			new Route(Method.GET, "/_opendistro/_security/api/actiongroup/"),
-			new Route(Method.DELETE, "/_opendistro/_security/api/actiongroup/{name}"),
-			new Route(Method.PUT, "/_opendistro/_security/api/actiongroup/{name}"),
-
-			new Route(Method.GET, "/_plugins/_security/api/actiongroup/{name}"),
-			new Route(Method.GET, "/_plugins/_security/api/actiongroup/"),
-			new Route(Method.DELETE, "/_plugins/_security/api/actiongroup/{name}"),
-			new Route(Method.PUT, "/_plugins/_security/api/actiongroup/{name}"),
+//			// legacy mapping for backwards compatibility
+//			// TODO: remove in next version
+			new Route(Method.GET, "/actiongroup/{name}"),
+			new Route(Method.GET, "/actiongroup/"),
+			new Route(Method.DELETE, "/actiongroup/{name}"),
+			new Route(Method.PUT, "/actiongroup/{name}"),
 
 			// corrected mapping, introduced in OpenSearch Security
-			new Route(Method.GET, "/_opendistro/_security/api/actiongroups/{name}"),
-			new Route(Method.GET, "/_opendistro/_security/api/actiongroups/"),
-			new Route(Method.DELETE, "/_opendistro/_security/api/actiongroups/{name}"),
-			new Route(Method.PUT, "/_opendistro/_security/api/actiongroups/{name}"),
-			new Route(Method.PATCH, "/_opendistro/_security/api/actiongroups/"),
-			new Route(Method.PATCH, "/_opendistro/_security/api/actiongroups/{name}"),
+			new Route(Method.GET, "/actiongroups/{name}"),
+			new Route(Method.GET, "/actiongroups/"),
+			new Route(Method.DELETE, "/actiongroups/{name}"),
+			new Route(Method.PUT, "/actiongroups/{name}"),
+			new Route(Method.PATCH, "/actiongroups/"),
+			new Route(Method.PATCH, "/actiongroups/{name}")
 
-			new Route(Method.GET, "/_plugins/_security/api/actiongroups/{name}"),
-			new Route(Method.GET, "/_plugins/_security/api/actiongroups/"),
-			new Route(Method.DELETE, "/_plugins/_security/api/actiongroups/{name}"),
-			new Route(Method.PUT, "/_plugins/_security/api/actiongroups/{name}"),
-			new Route(Method.PATCH, "/_plugins/_security/api/actiongroups/"),
-			new Route(Method.PATCH, "/_plugins/_security/api/actiongroups/{name}")
 	);
 
 	@Override
@@ -84,7 +73,7 @@ public class ActionGroupsApiAction extends PatchableResourceApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return routes;
+		return super.addRoutesPrefix(routes);
 	}
 
 	@Override

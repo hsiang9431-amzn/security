@@ -52,8 +52,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
-
+import java.util.ArrayList;
 import com.google.common.collect.ImmutableList;
+
 
 import static org.opensearch.security.dlic.rest.support.Utils.hash;
 
@@ -64,13 +65,9 @@ import static org.opensearch.security.dlic.rest.support.Utils.hash;
 public class AccountApiAction extends AbstractApiAction {
     private static final String RESOURCE_NAME = "account";
     private static final List<Route> routes = ImmutableList.of(
-            new Route(Method.GET, "/_opendistro/_security/api/account"),
-            new Route(Method.PUT, "/_opendistro/_security/api/account"),
-
-            new Route(Method.GET, "/_plugins/_security/api/account"),
-            new Route(Method.PUT, "/_plugins/_security/api/account")
+            new Route(Method.GET, "/account"),
+            new Route(Method.PUT, "/account")
     );
-
     private final PrivilegesEvaluator privilegesEvaluator;
     private final ThreadContext threadContext;
 
@@ -92,7 +89,7 @@ public class AccountApiAction extends AbstractApiAction {
 
     @Override
     public List<Route> routes() {
-        return routes;
+        return super.addRoutesPrefix(routes);
     }
 
     /**
