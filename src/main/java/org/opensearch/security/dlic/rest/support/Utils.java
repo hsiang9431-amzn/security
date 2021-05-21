@@ -217,6 +217,11 @@ public class Utils {
                 .collect(ImmutableSet.toImmutableSet());
     }
 
+    /**
+     * Add prefixes to rest API routes
+     * @param routes routes
+     * @return new list of API routes
+     */
     public static List<Route> addRoutesPrefix(List<Route> routes){
         List<Route> prefixedRoutes = new ArrayList<>();
         routes.stream().forEach(route -> {
