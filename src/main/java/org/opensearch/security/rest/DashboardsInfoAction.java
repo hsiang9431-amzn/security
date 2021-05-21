@@ -55,14 +55,18 @@ import org.opensearch.threadpool.ThreadPool;
 import org.opensearch.security.user.User;
 
 import com.google.common.collect.ImmutableList;
+import org.opensearch.security.dlic.rest.support.Utils;
 
 public class DashboardsInfoAction extends BaseRestHandler {
-    private static final List<Route> routes = ImmutableList.of(
-            new Route(GET, "/_opendistro/_security/kibanainfo"),
-            new Route(POST, "/_opendistro/_security/kibanainfo"),
+    private static final List<Route> legacyRoutes = ImmutableList.of(
+            new Route(GET, "/kibanainfo"),
+            new Route(POST, "/kibanainfo")
+    );
 
-            new Route(GET, "/_plugins/_security/dashboardsinfo"),
-            new Route(POST, "/_plugins/_security/dashboardsinfo")
+    private static final List<Route> routes = ImmutableList.of(
+            new Route(GET, "/dashboardsinfo"),
+            new Route(POST, "/dashboardsinfo")
+
     );
 
     private final Logger log = LogManager.getLogger(this.getClass());
@@ -77,7 +81,10 @@ public class DashboardsInfoAction extends BaseRestHandler {
 
     @Override
     public List<Route> routes() {
-        return routes;
+        List<Route> prefixRoutes = Utils.addRoutesPrefix(routes, "/_plugins/_security");
+        List<Route> retRoutes = Utils.addRoutesPrefix(legacyRoutes, "/_opendistro/_security");
+        retRoutes.addAll(prefixRoutes);
+        return retRoutes;
     }
 
     @Override

@@ -230,4 +230,20 @@ public class Utils {
         });
         return prefixedRoutes;
     }
+
+    /**
+     * Add prefix to rest API routes
+     * @param routes routes
+     * @param prefixes all api prefix
+     * @return new list of API routes
+     */
+    public static List<Route> addRoutesPrefix(List<Route> routes, final String... prefixes){
+        List<Route> prefixedRoutes = new ArrayList<>();
+        for (Route r : routes) {
+            for (String p : prefixes){
+                prefixedRoutes.add(new Route(r.getMethod(), p + r.getPath()));
+            }
+        }
+        return prefixedRoutes;
+    }
 }

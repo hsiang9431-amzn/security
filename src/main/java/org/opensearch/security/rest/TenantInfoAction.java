@@ -65,14 +65,12 @@ import org.opensearch.security.user.User;
 import org.opensearch.threadpool.ThreadPool;
 
 import com.google.common.collect.ImmutableList;
+import org.opensearch.security.dlic.rest.support.Utils;
 
 public class TenantInfoAction extends BaseRestHandler {
     private static final List<Route> routes = ImmutableList.of(
-            new Route(GET, "/_opendistro/_security/tenantinfo"),
-            new Route(POST, "/_opendistro/_security/tenantinfo"),
-
-            new Route(GET, "/_plugins/_security/tenantinfo"),
-            new Route(POST, "/_plugins/_security/tenantinfo")
+            new Route(GET, "/tenantinfo"),
+            new Route(POST, "/tenantinfo")
     );
 
     private final Logger log = LogManager.getLogger(this.getClass());
@@ -94,7 +92,8 @@ public class TenantInfoAction extends BaseRestHandler {
     }
 
     @Override
-    public List<Route> routes() { return routes; }
+    public List<Route> routes() {
+        return Utils.addRoutesPrefix(routes, "/_opendistro/_security", "/_plugins/_security"); }
 
     @Override
     protected RestChannelConsumer prepareRequest(RestRequest request, NodeClient client) throws IOException {

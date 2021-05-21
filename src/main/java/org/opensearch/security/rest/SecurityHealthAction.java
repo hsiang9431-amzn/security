@@ -49,15 +49,12 @@ import org.opensearch.rest.RestStatus;
 import org.opensearch.security.auth.BackendRegistry;
 
 import com.google.common.collect.ImmutableList;
-import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
+import org.opensearch.security.dlic.rest.support.Utils;
 
 public class SecurityHealthAction extends BaseRestHandler {
     private static final List<Route> routes = ImmutableList.of(
-            new Route(GET, "/_opendistro/_security/health"),
-            new Route(POST, "/_opendistro/_security/health"),
-
-            new Route(GET, "/_plugins/_security/health"),
-            new Route(POST, "/_plugins/_security/health")
+            new Route(GET, "/health"),
+            new Route(POST, "/health")
     );
 
     private final BackendRegistry registry;
@@ -69,7 +66,7 @@ public class SecurityHealthAction extends BaseRestHandler {
 
     @Override
     public List<Route> routes() {
-        return routes;
+        return Utils.addRoutesPrefix(routes, "/_opendistro/_security", "/_plugins/_security");
     }
 
     @Override
