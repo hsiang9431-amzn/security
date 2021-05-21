@@ -72,6 +72,10 @@ public class HTTPSamlAuthenticator implements HTTPAuthenticator, Destroyable {
     public static final String IDP_METADATA_URL = "idp.metadata_url";
     public static final String IDP_METADATA_FILE = "idp.metadata_file";
     public static final String IDP_METADATA_CONTENT = "idp.metadata_content";
+    public static final String OPENDISTRO_AUTHTOKEN_PATH = "/_opendistro/_security/api/authtoken";
+    public static final String PLUGINS_AUTHTOKEN_PATH = "/_plugins/_security/api/authtoken";
+    public static final String OPENDISTRO_AUTHINFO_PATH = "/_opendistro/_security/authinfo";
+    public static final String PLUGINS_AUTHINFO_PATH = "/_plugins/_security/authinfo";
 
     private static boolean openSamlInitialized = false;
 
@@ -141,15 +145,15 @@ public class HTTPSamlAuthenticator implements HTTPAuthenticator, Destroyable {
     @Override
     public AuthCredentials extractCredentials(RestRequest restRequest, ThreadContext threadContext)
             throws OpenSearchSecurityException {
-        if ("/_opendistro/_security/api/authtoken".equals(restRequest.path()) ||
-                "/_plugins/_security/api/authtoken".equals(restRequest.path())) {
+        if (OPENDISTRO_AUTHTOKEN_PATH.equals(restRequest.path()) ||
+                PLUGINS_AUTHINFO_PATH.equals(restRequest.path())) {
             return null;
         }
 
         AuthCredentials authCredentials = this.httpJwtAuthenticator.extractCredentials(restRequest, threadContext);
 
-        if ("/_opendistro/_security/authinfo".equals(restRequest.path()) ||
-                "/_plugins/_security/api/authinfo".equals(restRequest.path())) {
+        if (OPENDISTRO_AUTHINFO_PATH.equals(restRequest.path()) ||
+                PLUGINS_AUTHINFO_PATH.equals(restRequest.path())) {
             this.initLogoutUrl(restRequest, threadContext, authCredentials);
         }
 
@@ -166,8 +170,8 @@ public class HTTPSamlAuthenticator implements HTTPAuthenticator, Destroyable {
         try {
             RestRequest restRequest = restChannel.request();
 
-            if (("/_opendistro/_security/api/authtoken".equals(restRequest.path()) ||
-                    "/_plugins/_security/api/authtoken".equals(restRequest.path()) )
+            if ((OPENDISTRO_AUTHTOKEN_PATH.equals(restRequest.path()) ||
+                    PLUGINS_AUTHTOKEN_PATH.equals(restRequest.path()) )
                     && this.authTokenProcessorHandler.handle(restRequest, restChannel)) {
                 return true;
             }

@@ -45,18 +45,17 @@ import org.opensearch.rest.RestController;
 import org.opensearch.rest.RestRequest;
 import org.opensearch.rest.RestRequest.Method;
 import org.opensearch.rest.RestStatus;
-import org.opensearch.security.dlic.rest.support.Utils;
 import org.opensearch.threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 import com.google.common.collect.ImmutableList;
 
 
 import static org.opensearch.security.dlic.rest.support.Utils.hash;
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 /**
  * Rest API action to fetch or update account details of the signed-in user.
@@ -68,6 +67,7 @@ public class AccountApiAction extends AbstractApiAction {
             new Route(Method.GET, "/account"),
             new Route(Method.PUT, "/account")
     );
+
     private final PrivilegesEvaluator privilegesEvaluator;
     private final ThreadContext threadContext;
 
@@ -89,7 +89,7 @@ public class AccountApiAction extends AbstractApiAction {
 
     @Override
     public List<Route> routes() {
-        return super.addRoutesPrefix(routes);
+        return addRoutesPrefix(routes);
     }
 
     /**

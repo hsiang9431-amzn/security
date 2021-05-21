@@ -45,6 +45,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
+
 
 /**
  * This class implements GET and PUT operations to manage dynamic WhitelistingSettings.
@@ -154,7 +156,7 @@ public class WhitelistApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return super.addRoutesPrefix(routes);
+        return addRoutesPrefix(routes);
     }
 
     @Override

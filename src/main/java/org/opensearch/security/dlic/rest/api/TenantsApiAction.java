@@ -53,6 +53,7 @@ import org.opensearch.security.ssl.transport.PrincipalExtractor;
 import org.opensearch.threadpool.ThreadPool;
 
 import com.google.common.collect.ImmutableList;
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class TenantsApiAction extends PatchableResourceApiAction {
     private static final List<Route> routes = ImmutableList.of(
@@ -73,7 +74,7 @@ public class TenantsApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return super.addRoutesPrefix(routes);
+        return addRoutesPrefix(routes);
     }
 
     @Override

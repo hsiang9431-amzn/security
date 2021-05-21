@@ -262,13 +262,4 @@ public abstract class PatchableResourceApiAction extends AbstractApiAction {
                 DefaultObjectMapper.objectMapper.writeValueAsString(patchedResource).getBytes(StandardCharsets.UTF_8));
         return getValidator(request, patchedResourceAsByteReference);
     }
-
-    protected List<Route> addRoutesPrefix(List<Route> routes){
-        List<Route> prefixedRoutes = new ArrayList<>();
-        for(Route route : routes){
-            prefixedRoutes.add(new Route(route.getMethod(), "/_opendistro/_security/api" + route.getPath()));
-            prefixedRoutes.add(new Route(route.getMethod(), "/_plugins/_security/api" + route.getPath()));
-        }
-        return prefixedRoutes;
-    }
 }

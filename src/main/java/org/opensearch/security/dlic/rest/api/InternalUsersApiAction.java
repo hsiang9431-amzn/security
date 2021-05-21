@@ -50,6 +50,7 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 
 import static org.opensearch.security.dlic.rest.support.Utils.hash;
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class InternalUsersApiAction extends PatchableResourceApiAction {
     private static final List<Route> routes = ImmutableList.of(
@@ -79,7 +80,7 @@ public class InternalUsersApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return super.addRoutesPrefix(routes);
+        return addRoutesPrefix(routes);
     }
 
     @Override

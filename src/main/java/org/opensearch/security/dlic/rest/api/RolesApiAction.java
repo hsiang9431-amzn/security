@@ -38,6 +38,7 @@ import org.opensearch.threadpool.ThreadPool;
 import org.opensearch.security.securityconf.impl.CType;
 
 import com.google.common.collect.ImmutableList;
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class RolesApiAction extends PatchableResourceApiAction {
 	private static final List<Route> routes = ImmutableList.of(
@@ -57,7 +58,7 @@ public class RolesApiAction extends PatchableResourceApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return super.addRoutesPrefix(routes);
+		return addRoutesPrefix(routes);
 	}
 
 	@Override

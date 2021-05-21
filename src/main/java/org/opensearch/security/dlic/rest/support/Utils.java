@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.google.common.collect.ImmutableSet;
 import org.bouncycastle.crypto.generators.OpenBSDBCrypt;
@@ -38,6 +40,7 @@ import org.opensearch.common.xcontent.XContentHelper;
 import org.opensearch.common.xcontent.XContentParser;
 import org.opensearch.common.xcontent.XContentType;
 import org.opensearch.common.xcontent.json.JsonXContent;
+import org.opensearch.rest.RestHandler.Route;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -212,5 +215,14 @@ public class Utils {
                 .stream()
                 .map(field -> prefix + field)
                 .collect(ImmutableSet.toImmutableSet());
+    }
+
+    public static List<Route> addRoutesPrefix(List<Route> routes){
+        List<Route> prefixedRoutes = new ArrayList<>();
+        routes.stream().forEach(route -> {
+            prefixedRoutes.add(new Route(route.getMethod(), "/_opendistro/_security/api" + route.getPath()));
+            prefixedRoutes.add(new Route(route.getMethod(), "/_plugins/_security/api" + route.getPath()));
+        });
+        return prefixedRoutes;
     }
 }

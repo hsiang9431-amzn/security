@@ -49,6 +49,7 @@ import org.opensearch.rest.RestStatus;
 import org.opensearch.security.auth.BackendRegistry;
 
 import com.google.common.collect.ImmutableList;
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class SecurityHealthAction extends BaseRestHandler {
     private static final List<Route> routes = ImmutableList.of(

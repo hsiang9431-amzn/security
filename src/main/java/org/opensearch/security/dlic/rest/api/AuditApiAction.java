@@ -47,6 +47,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
+
 /**
  * Rest handler for fetching and updating audit configuration.
  * Supported REST endpoints
@@ -168,7 +170,7 @@ public class AuditApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return super.addRoutesPrefix(routes);
+        return addRoutesPrefix(routes);
     }
 
     @Override

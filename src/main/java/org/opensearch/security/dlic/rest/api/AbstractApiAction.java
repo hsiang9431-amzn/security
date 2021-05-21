@@ -71,7 +71,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.opensearch.security.securityconf.impl.CType;
 import org.opensearch.security.securityconf.impl.SecurityDynamicConfiguration;
 
-import com.google.common.collect.ImmutableList;
 
 public abstract class AbstractApiAction extends BaseRestHandler {
 
@@ -612,14 +611,5 @@ public abstract class AbstractApiAction extends BaseRestHandler {
 			return false;
 		}
 		return true;
-	}
-
-	protected List<Route> addRoutesPrefix(List<Route> routes){
-		List<Route> prefixedRoutes = new ArrayList<>();
-		for(Route route : routes){
-			prefixedRoutes.add(new Route(route.getMethod(), "/_opendistro/_security/api" + route.getPath()));
-			prefixedRoutes.add(new Route(route.getMethod(), "/_plugins/_security/api" + route.getPath()));
-		}
-		return prefixedRoutes;
 	}
 }

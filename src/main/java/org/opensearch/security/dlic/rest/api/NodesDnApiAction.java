@@ -45,6 +45,8 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
+
 /**
  * This class implements CRUD operations to manage dynamic NodesDn. The primary usecase is targeted at cross-cluster where
  * in node restart can be avoided by populating the coordinating cluster's nodes_dn values.
@@ -82,7 +84,7 @@ public class NodesDnApiAction extends PatchableResourceApiAction {
     @Override
     public List<Route> routes() {
         if (settings.getAsBoolean(ConfigConstants.OPENDISTRO_SECURITY_NODES_DN_DYNAMIC_CONFIG_ENABLED, false)) {
-            return super.addRoutesPrefix(routes);
+            return addRoutesPrefix(routes);
         }
         return Collections.emptyList();
     }

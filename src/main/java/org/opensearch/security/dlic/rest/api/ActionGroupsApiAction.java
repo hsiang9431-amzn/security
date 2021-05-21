@@ -39,11 +39,13 @@ import org.opensearch.security.securityconf.impl.CType;
 
 import com.google.common.collect.ImmutableList;
 
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
+
 public class ActionGroupsApiAction extends PatchableResourceApiAction {
 
 	private static final List<Route> routes = ImmutableList.of(
-//			// legacy mapping for backwards compatibility
-//			// TODO: remove in next version
+			// legacy mapping for backwards compatibility
+			// TODO: remove in next version
 			new Route(Method.GET, "/actiongroup/{name}"),
 			new Route(Method.GET, "/actiongroup/"),
 			new Route(Method.DELETE, "/actiongroup/{name}"),
@@ -73,7 +75,7 @@ public class ActionGroupsApiAction extends PatchableResourceApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return super.addRoutesPrefix(routes);
+		return addRoutesPrefix(routes);
 	}
 
 	@Override

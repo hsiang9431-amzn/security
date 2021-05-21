@@ -41,8 +41,7 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
-
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class AuthTokenProcessorAction extends AbstractApiAction {
 	private static final List<Route> routes = Collections.singletonList(
@@ -60,7 +59,7 @@ public class AuthTokenProcessorAction extends AbstractApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return super.addRoutesPrefix(routes);
+		return addRoutesPrefix(routes);
 	}
 
 	@Override

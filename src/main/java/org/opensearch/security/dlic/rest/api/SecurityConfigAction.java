@@ -43,6 +43,7 @@ import org.opensearch.security.support.ConfigConstants;
 import org.opensearch.threadpool.ThreadPool;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class SecurityConfigAction extends PatchableResourceApiAction {
 
@@ -69,9 +70,7 @@ public class SecurityConfigAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        List<Route> getPrefixedRotes = super.addRoutesPrefix(getRoutes);
-        List<Route> allPrefixedRotes = super.addRoutesPrefix(allRoutes);
-        return allowPutOrPatch ? allPrefixedRotes : getPrefixedRotes; }
+        return allowPutOrPatch ? addRoutesPrefix(allRoutes) : addRoutesPrefix(getRoutes); }
 
     @Override
     protected void handleGet(RestChannel channel, RestRequest request, Client client, final JsonNode content) throws IOException{

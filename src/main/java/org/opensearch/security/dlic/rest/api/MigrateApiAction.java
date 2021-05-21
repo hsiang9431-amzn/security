@@ -72,6 +72,7 @@ import org.opensearch.security.securityconf.impl.v7.RoleV7;
 import org.opensearch.security.securityconf.impl.v7.TenantV7;
 
 import com.google.common.collect.ImmutableList;
+import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class MigrateApiAction extends AbstractApiAction {
     private static final List<Route> routes = Collections.singletonList(
@@ -87,7 +88,7 @@ public class MigrateApiAction extends AbstractApiAction {
 
     @Override
     public List<Route> routes() {
-        return super.addRoutesPrefix(routes);
+        return addRoutesPrefix(routes);
     }
 
     @Override
