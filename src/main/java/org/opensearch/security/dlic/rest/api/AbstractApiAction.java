@@ -18,10 +18,8 @@ package org.opensearch.security.dlic.rest.api;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.List;
 
 import org.opensearch.security.DefaultObjectMapper;
 import org.apache.logging.log4j.LogManager;

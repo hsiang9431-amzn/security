@@ -53,9 +53,8 @@ import java.util.List;
 import java.util.Set;
 import com.google.common.collect.ImmutableList;
 
-
 import static org.opensearch.security.dlic.rest.support.Utils.hash;
-import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
+import org.opensearch.security.dlic.rest.support.Utils;
 
 /**
  * Rest API action to fetch or update account details of the signed-in user.
@@ -89,7 +88,7 @@ public class AccountApiAction extends AbstractApiAction {
 
     @Override
     public List<Route> routes() {
-        return addRoutesPrefix(routes);
+        return Utils.addRoutesPrefix(routes);
     }
 
     /**

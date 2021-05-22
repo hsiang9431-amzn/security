@@ -224,12 +224,7 @@ public class Utils {
      *Total number of routes is expanded as twice as the number of routes passed in
      */
     public static List<Route> addRoutesPrefix(List<Route> routes){
-        List<Route> prefixedRoutes = new ArrayList<>();
-        routes.stream().forEach(route -> {
-            prefixedRoutes.add(new Route(route.getMethod(), "/_opendistro/_security/api" + route.getPath()));
-            prefixedRoutes.add(new Route(route.getMethod(), "/_plugins/_security/api" + route.getPath()));
-        });
-        return prefixedRoutes;
+        return addRoutesPrefix(routes, "/_opendistro/_security/api", "/_plugins/_security/api");
     }
 
     /**

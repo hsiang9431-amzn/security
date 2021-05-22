@@ -46,7 +46,6 @@ import org.opensearch.threadpool.ThreadPool;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 
 import static org.opensearch.security.dlic.rest.support.Utils.hash;

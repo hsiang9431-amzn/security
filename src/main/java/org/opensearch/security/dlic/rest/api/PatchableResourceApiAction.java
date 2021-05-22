@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
 
 import org.opensearch.security.DefaultObjectMapper;
 import org.apache.logging.log4j.LogManager;
