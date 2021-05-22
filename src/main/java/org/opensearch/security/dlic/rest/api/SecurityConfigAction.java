@@ -47,15 +47,15 @@ import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class SecurityConfigAction extends PatchableResourceApiAction {
 
-    private static final List<Route> getRoutes = Collections.singletonList(
+    private static final List<Route> getRoutes = addRoutesPrefix(Collections.singletonList(
             new Route(Method.GET, "/securityconfig/")
-    );
+    ));
 
-    private static final List<Route> allRoutes = new ImmutableList.Builder<Route>()
+    private static final List<Route> allRoutes = addRoutesPrefix(new ImmutableList.Builder<Route>()
             .addAll(getRoutes)
             .add(new Route(Method.PUT, "/securityconfig/{name}"))
             .add(new Route(Method.PATCH, "/securityconfig/"))
-            .build();
+            .build());
 
     private final boolean allowPutOrPatch;
 
@@ -70,7 +70,7 @@ public class SecurityConfigAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return allowPutOrPatch ? addRoutesPrefix(allRoutes) : addRoutesPrefix(getRoutes); }
+        return allowPutOrPatch ? allRoutes : getRoutes; }
 
     @Override
     protected void handleGet(RestChannel channel, RestRequest request, Client client, final JsonNode content) throws IOException{

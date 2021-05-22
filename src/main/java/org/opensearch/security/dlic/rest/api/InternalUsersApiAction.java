@@ -52,7 +52,7 @@ import static org.opensearch.security.dlic.rest.support.Utils.hash;
 import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class InternalUsersApiAction extends PatchableResourceApiAction {
-    private static final List<Route> routes = ImmutableList.of(
+    private static final List<Route> routes = addRoutesPrefix(ImmutableList.of(
             new Route(Method.GET, "/user/{name}"),
             new Route(Method.GET, "/user/"),
             new Route(Method.DELETE, "/user/{name}"),
@@ -66,7 +66,7 @@ public class InternalUsersApiAction extends PatchableResourceApiAction {
             new Route(Method.PATCH, "/internalusers/"),
             new Route(Method.PATCH, "/internalusers/{name}")
 
-    );
+    ));
 
     @Inject
     public InternalUsersApiAction(final Settings settings, final Path configPath, final RestController controller,
@@ -79,7 +79,7 @@ public class InternalUsersApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return addRoutesPrefix(routes);
+        return routes;
     }
 
     @Override

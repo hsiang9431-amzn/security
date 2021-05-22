@@ -89,11 +89,11 @@ import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
  * <p>
  */
 public class WhitelistApiAction extends PatchableResourceApiAction {
-    private static final List<Route> routes = ImmutableList.of(
+    private static final List<Route> routes = addRoutesPrefix(ImmutableList.of(
             new Route(RestRequest.Method.GET, "/whitelist"),
             new Route(RestRequest.Method.PUT, "/whitelist"),
             new Route(RestRequest.Method.PATCH, "/whitelist")
-    );
+    ));
 
     private static final String name = "config";
 
@@ -156,7 +156,7 @@ public class WhitelistApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return addRoutesPrefix(routes);
+        return routes;
     }
 
     @Override

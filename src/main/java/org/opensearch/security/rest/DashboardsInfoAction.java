@@ -83,8 +83,10 @@ public class DashboardsInfoAction extends BaseRestHandler {
     public List<Route> routes() {
         List<Route> prefixRoutes = Utils.addRoutesPrefix(routes, "/_plugins/_security");
         List<Route> retRoutes = Utils.addRoutesPrefix(legacyRoutes, "/_opendistro/_security");
-        retRoutes.addAll(prefixRoutes);
-        return retRoutes;
+        return ImmutableList.<Route>builder()
+                .addAll(prefixRoutes)
+                .addAll(retRoutes)
+                .build();
     }
 
     @Override

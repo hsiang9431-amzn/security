@@ -52,9 +52,9 @@ import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
  * Provides the evaluated REST API permissions for the currently logged in user
  */
 public class PermissionsInfoAction extends BaseRestHandler {
-	private static final List<Route> routes = Collections.singletonList(
+	private static final List<Route> routes = addRoutesPrefix(Collections.singletonList(
 			new Route(Method.GET, "/permissionsinfo")
-	);
+	));
 
 	private final RestApiPrivilegesEvaluator restApiPrivilegesEvaluator;
 	private final ThreadPool threadPool;
@@ -78,7 +78,7 @@ public class PermissionsInfoAction extends BaseRestHandler {
 
 	@Override
 	public List<Route> routes() {
-		return addRoutesPrefix(routes);
+		return routes;
 	}
 
 	@Override

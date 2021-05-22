@@ -41,14 +41,14 @@ import com.google.common.collect.ImmutableList;
 import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class RolesApiAction extends PatchableResourceApiAction {
-	private static final List<Route> routes = ImmutableList.of(
+	private static final List<Route> routes = addRoutesPrefix(ImmutableList.of(
 			new Route(Method.GET, "/roles/"),
 			new Route(Method.GET, "/roles/{name}"),
 			new Route(Method.DELETE, "/roles/{name}"),
 			new Route(Method.PUT, "/roles/{name}"),
 			new Route(Method.PATCH, "/roles/"),
 			new Route(Method.PATCH, "/roles/{name}")
-	);
+	));
 
 	@Inject
 	public RolesApiAction(Settings settings, final Path configPath, RestController controller, Client client, AdminDNs adminDNs, ConfigurationRepository cl,
@@ -58,7 +58,7 @@ public class RolesApiAction extends PatchableResourceApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return addRoutesPrefix(routes);
+		return routes;
 	}
 
 	@Override

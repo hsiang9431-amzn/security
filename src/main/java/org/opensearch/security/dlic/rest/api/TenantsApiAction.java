@@ -56,14 +56,14 @@ import com.google.common.collect.ImmutableList;
 import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class TenantsApiAction extends PatchableResourceApiAction {
-    private static final List<Route> routes = ImmutableList.of(
+    private static final List<Route> routes = addRoutesPrefix(ImmutableList.of(
             new Route(Method.GET, "/tenants/{name}"),
             new Route(Method.GET, "/tenants/"),
             new Route(Method.DELETE, "/tenants/{name}"),
             new Route(Method.PUT, "/tenants/{name}"),
             new Route(Method.PATCH, "/tenants/"),
             new Route(Method.PATCH, "/tenants/{name}")
-    );
+    ));
 
     @Inject
     public TenantsApiAction(final Settings settings, final Path configPath, final RestController controller, final Client client,
@@ -74,7 +74,7 @@ public class TenantsApiAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return addRoutesPrefix(routes);
+        return routes;
     }
 
     @Override

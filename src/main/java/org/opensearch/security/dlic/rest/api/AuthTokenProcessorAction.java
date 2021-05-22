@@ -43,9 +43,9 @@ import java.util.List;
 import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class AuthTokenProcessorAction extends AbstractApiAction {
-	private static final List<Route> routes = Collections.singletonList(
+	private static final List<Route> routes = addRoutesPrefix(Collections.singletonList(
 			new Route(Method.POST, "/authtoken")
-	);
+	));
 
 	@Inject
 	public AuthTokenProcessorAction(final Settings settings, final Path configPath, final RestController controller,
@@ -58,7 +58,7 @@ public class AuthTokenProcessorAction extends AbstractApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return addRoutesPrefix(routes);
+		return routes;
 	}
 
 	@Override

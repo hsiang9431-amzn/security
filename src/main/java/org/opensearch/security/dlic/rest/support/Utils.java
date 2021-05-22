@@ -49,6 +49,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.opensearch.security.DefaultObjectMapper;
 
 import static org.opensearch.common.xcontent.DeprecationHandler.THROW_UNSUPPORTED_OPERATION;
+import com.google.common.collect.ImmutableList;
 
 public class Utils {
 
@@ -235,12 +236,9 @@ public class Utils {
      * Total number of routes will be expanded len(prefixes) as much comparing to the list passed in
      */
     public static List<Route> addRoutesPrefix(List<Route> routes, final String... prefixes){
-        List<Route> prefixedRoutes = new ArrayList<>();
-        for (Route r : routes) {
-            for (String p : prefixes){
-                prefixedRoutes.add(new Route(r.getMethod(), p + r.getPath()));
-            }
-        }
-        return prefixedRoutes;
+        return routes.stream().flatMap(
+                r -> Arrays.stream(prefixes)
+                           .map(p -> new Route(r.getMethod(), p + r.getPath())))
+                                        .collect(ImmutableList.toImmutableList());
     }
 }

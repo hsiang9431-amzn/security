@@ -42,7 +42,7 @@ import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class ActionGroupsApiAction extends PatchableResourceApiAction {
 
-	private static final List<Route> routes = ImmutableList.of(
+	private static final List<Route> routes = addRoutesPrefix(ImmutableList.of(
 			// legacy mapping for backwards compatibility
 			// TODO: remove in next version
 			new Route(Method.GET, "/actiongroup/{name}"),
@@ -58,7 +58,7 @@ public class ActionGroupsApiAction extends PatchableResourceApiAction {
 			new Route(Method.PATCH, "/actiongroups/"),
 			new Route(Method.PATCH, "/actiongroups/{name}")
 
-	);
+	));
 
 	@Override
 	protected Endpoint getEndpoint() {
@@ -74,7 +74,7 @@ public class ActionGroupsApiAction extends PatchableResourceApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return addRoutesPrefix(routes);
+		return routes;
 	}
 
 	@Override

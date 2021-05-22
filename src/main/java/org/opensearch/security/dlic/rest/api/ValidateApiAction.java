@@ -58,9 +58,9 @@ import org.opensearch.security.securityconf.impl.v7.TenantV7;
 import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class ValidateApiAction extends AbstractApiAction {
-    private static final List<Route> routes = Collections.singletonList(
+    private static final List<Route> routes = addRoutesPrefix(Collections.singletonList(
             new Route(Method.GET, "/validate")
-    );
+    ));
 
     @Inject
     public ValidateApiAction(final Settings settings, final Path configPath, final RestController controller, final Client client,
@@ -71,7 +71,7 @@ public class ValidateApiAction extends AbstractApiAction {
 
     @Override
     public List<Route> routes() {
-        return addRoutesPrefix(routes);
+        return routes;
     }
 
     @Override

@@ -47,12 +47,12 @@ import com.google.common.collect.ImmutableList;
 import static org.opensearch.security.dlic.rest.support.Utils.addRoutesPrefix;
 
 public class FlushCacheApiAction extends AbstractApiAction {
-	private static final List<Route> routes = ImmutableList.of(
+	private static final List<Route> routes = addRoutesPrefix(ImmutableList.of(
 			new Route(Method.DELETE, "/cache"),
 			new Route(Method.GET, "/cache"),
 			new Route(Method.PUT, "/cache"),
 			new Route(Method.POST, "/cache")
-	);
+	));
 
 	@Inject
 	public FlushCacheApiAction(final Settings settings, final Path configPath, final RestController controller, final Client client,
@@ -63,7 +63,7 @@ public class FlushCacheApiAction extends AbstractApiAction {
 
 	@Override
 	public List<Route> routes() {
-		return addRoutesPrefix(routes);
+		return routes;
 	}
 
 	@Override
