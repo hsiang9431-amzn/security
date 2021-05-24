@@ -15,6 +15,8 @@
 
 package org.opensearch.security.dlic.rest.api;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.opensearch.security.DefaultObjectMapper;
 import org.opensearch.security.auditlog.AuditTestUtils;
 import org.opensearch.security.auditlog.config.AuditConfig;
@@ -37,9 +39,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.opensearch.security.DefaultObjectMapper.writeValueAsString;
@@ -47,15 +47,29 @@ import static org.opensearch.security.DefaultObjectMapper.readTree;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(Parameterized.class)
 public class AuditApiActionTest extends AbstractRestApiUnitTest {
 
-    private static final String ENDPOINT = "/_opendistro/_security/api/audit";
-    private static final String CONFIG_ENDPOINT = "/_opendistro/_security/api/audit/config";
+    private final String ENDPOINT;
+    private final String CONFIG_ENDPOINT;
 
     // admin cred with roles in test yml files
     final Header adminCredsHeader = encodeBasicHeader("sarek", "sarek");
     // non-admin
     final Header nonAdminCredsHeader = encodeBasicHeader("random", "random");
+
+    public AuditApiActionTest(String configEndpoint, String endpoint){
+        CONFIG_ENDPOINT = configEndpoint;
+        ENDPOINT = endpoint;
+    }
+
+    @Parameterized.Parameters
+    public static Collection input() {
+        return Arrays.asList(new Object[][] {
+            {"/_opendistro/_security/api/audit/config", "/_opendistro/_security/api/audit"},
+            {"/_plugins/_security/api/audit/config", "/_plugins/_security/api/audit"}
+        });
+    }
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
