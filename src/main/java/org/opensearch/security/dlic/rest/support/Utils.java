@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.List;
-import java.util.ArrayList;
 
 import com.google.common.collect.ImmutableSet;
 import org.bouncycastle.crypto.generators.OpenBSDBCrypt;
@@ -48,8 +47,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.opensearch.security.DefaultObjectMapper;
 
-import static org.opensearch.common.xcontent.DeprecationHandler.THROW_UNSUPPORTED_OPERATION;
 import com.google.common.collect.ImmutableList;
+import static org.opensearch.common.xcontent.DeprecationHandler.THROW_UNSUPPORTED_OPERATION;
+
 
 public class Utils {
 
@@ -239,6 +239,6 @@ public class Utils {
         return routes.stream().flatMap(
                 r -> Arrays.stream(prefixes)
                            .map(p -> new Route(r.getMethod(), p + r.getPath())))
-                                        .collect(ImmutableList.toImmutableList());
+                           .collect(ImmutableList.toImmutableList());
     }
 }

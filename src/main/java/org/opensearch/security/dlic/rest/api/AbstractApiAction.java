@@ -69,7 +69,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.opensearch.security.securityconf.impl.CType;
 import org.opensearch.security.securityconf.impl.SecurityDynamicConfiguration;
 
-
 public abstract class AbstractApiAction extends BaseRestHandler {
 
 	protected final Logger log = LogManager.getLogger(this.getClass());

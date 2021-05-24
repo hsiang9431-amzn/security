@@ -70,7 +70,8 @@ public class SecurityConfigAction extends PatchableResourceApiAction {
 
     @Override
     public List<Route> routes() {
-        return allowPutOrPatch ? allRoutes : getRoutes; }
+        return allowPutOrPatch ? allRoutes : getRoutes;
+    }
 
     @Override
     protected void handleGet(RestChannel channel, RestRequest request, Client client, final JsonNode content) throws IOException{
