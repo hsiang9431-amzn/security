@@ -55,6 +55,7 @@ import org.opensearch.action.admin.indices.delete.DeleteIndexAction;
 import org.opensearch.action.admin.indices.mapping.get.GetFieldMappingsRequest;
 import org.opensearch.action.admin.indices.mapping.put.AutoPutMappingAction;
 import org.opensearch.action.admin.indices.mapping.put.PutMappingAction;
+import org.opensearch.action.admin.indices.resolve.ResolveIndexAction;
 import org.opensearch.action.bulk.BulkAction;
 import org.opensearch.action.bulk.BulkItemRequest;
 import org.opensearch.action.bulk.BulkRequest;
@@ -352,6 +353,35 @@ public class PrivilegesEvaluator {
 
         final Set<String> allIndexPermsRequired = evaluateAdditionalIndexPermissions(request, action0);
         final String[] allIndexPermsRequiredA = allIndexPermsRequired.toArray(new String[0]);
+
+        // handle resolve requests
+        if (action0.equals(ResolveIndexAction.NAME)) {
+
+            if(requestedResolved.getAllIndices().isEmpty()) {
+                presponse.missingPrivileges.clear();
+                presponse.allowed = true;
+                return presponse;
+            }
+
+            Set<String> reduced = securityRoles.reduce(requestedResolved, user, allIndexPermsRequiredA, resolver, clusterService);
+
+            if(reduced.isEmpty()) {
+                if(request instanceof ResolveIndexAction.Request) {
+                    ((ResolveIndexAction.Request) request).indices(new String[0]);
+                    presponse.missingPrivileges.clear();
+                    presponse.allowed = true;
+                    return presponse;
+                }
+                presponse.allowed = false;
+                return presponse;
+            }
+
+            if(irr.replace(request, true, reduced.toArray(new String[0]))) {
+                presponse.missingPrivileges.clear();
+                presponse.allowed = true;
+                return presponse;
+            }
+        }
 
         if (isDebugEnabled) {
             log.debug("Requested {} from {}", allIndexPermsRequired, caller);

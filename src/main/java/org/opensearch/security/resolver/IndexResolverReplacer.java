@@ -43,7 +43,9 @@ import java.util.Set;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.opensearch.action.admin.indices.datastream.CreateDataStreamAction;
+import org.opensearch.action.admin.indices.resolve.ResolveIndexAction;
 import org.opensearch.security.OpenSearchSecurityPlugin;
 import org.apache.commons.collections.keyvalue.MultiKey;
 import org.apache.logging.log4j.LogManager;
@@ -87,6 +89,7 @@ import org.opensearch.index.IndexNotFoundException;
 import org.opensearch.index.reindex.ReindexRequest;
 import org.opensearch.security.configuration.ClusterInfoHolder;
 import org.opensearch.security.securityconf.DynamicConfigModel;
+import org.opensearch.security.support.ConfigConstants;
 import org.opensearch.snapshots.SnapshotInfo;
 import org.opensearch.snapshots.SnapshotUtils;
 import org.opensearch.transport.RemoteClusterService;
@@ -294,7 +297,9 @@ public class IndexResolverReplacer {
         @Override
         public String[] provide(String[] original, Object localRequest, boolean supportsReplace) {
             final IndicesOptions indicesOptions = indicesOptionsFrom(localRequest);
-            final boolean enableCrossClusterResolution = localRequest instanceof FieldCapabilitiesRequest || localRequest instanceof SearchRequest;
+            final boolean enableCrossClusterResolution = localRequest instanceof FieldCapabilitiesRequest
+                    || localRequest instanceof SearchRequest
+                    || localRequest instanceof ResolveIndexAction.Request;
             // skip the whole thing if we have seen this exact resolveIndexPatterns request
             if (alreadyResolved.add(new MultiKey(indicesOptions, enableCrossClusterResolution,
                     (original != null) ? new MultiKey(original, false) : null))) {
@@ -634,6 +639,14 @@ public class IndexResolverReplacer {
                 return false;
             }
             ((IndexRequest) request).index(newIndices.length!=1?null:newIndices[0]);
+        } else if(request instanceof ResolveIndexAction.Request) {
+            String[] newIndices = provider.provide(((Replaceable) request).indices(), request, true);
+            // remove index ".opendistro_security" from result as it is not expected in original _search for kibana
+            newIndices = ArrayUtils.removeElement(newIndices, ConfigConstants.OPENDISTRO_SECURITY_DEFAULT_CONFIG_INDEX);
+            if(checkIndices(request, newIndices, false, allowEmptyIndices) == false) {
+                return false;
+            }
+            ((Replaceable) request).indices(newIndices);
         } else if (request instanceof Replaceable) {
             String[] newIndices = provider.provide(((Replaceable) request).indices(), request, true);
             if(checkIndices(request, newIndices, false, allowEmptyIndices) == false) {
