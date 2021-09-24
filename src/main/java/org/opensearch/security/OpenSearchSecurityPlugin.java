@@ -886,6 +886,9 @@ public final class OpenSearchSecurityPlugin extends OpenSearchSecuritySSLPlugin 
         settings.add(Setting.boolSetting(ConfigConstants.SECURITY_SYSTEM_INDICES_ENABLED_KEY, ConfigConstants.SECURITY_SYSTEM_INDICES_ENABLED_DEFAULT, Property.NodeScope, Property.Filtered, Property.Final));
         settings.add(Setting.listSetting(ConfigConstants.SECURITY_SYSTEM_INDICES_KEY, ConfigConstants.SECURITY_SYSTEM_INDICES_DEFAULT, Function.identity(), Property.NodeScope, Property.Filtered, Property.Final));
 
+        // Static role name selection
+        settings.add(Setting.boolSetting(ConfigConstants.SECURITY_LOAD_DASHBOARDS_STATICS, true, Property.NodeScope, Property.Filtered, Property.Final));
+
         if(!SSLConfig.isSslOnlyMode()) {
             settings.add(Setting.listSetting(ConfigConstants.SECURITY_AUTHCZ_ADMIN_DN, Collections.emptyList(), Function.identity(), Property.NodeScope)); //not filtered here
     

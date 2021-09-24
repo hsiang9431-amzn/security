@@ -278,6 +278,9 @@ public class ConfigConstants {
     public static final String SECURITY_SYSTEM_INDICES_KEY = "plugins.security.system_indices.indices";
     public static final List<String> SECURITY_SYSTEM_INDICES_DEFAULT = Collections.emptyList();
 
+    // Static role name selection
+    public static final String SECURITY_LOAD_DASHBOARDS_STATICS = "plugins.security.load_dashboards_statics";
+
     public static Set<String> getSettingAsSet(final Settings settings, final String key, final List<String> defaultList, final boolean ignoreCaseForNone) {
         final List<String> list = settings.getAsList(key, defaultList);
         if (list.size() == 1 && "NONE".equals(ignoreCaseForNone? list.get(0).toUpperCase() : list.get(0))) {

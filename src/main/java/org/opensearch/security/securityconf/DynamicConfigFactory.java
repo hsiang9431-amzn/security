@@ -90,17 +90,27 @@ public class DynamicConfigFactory implements Initializable, ConfigurationChangeL
         staticTenants = SecurityDynamicConfiguration.empty();
     }
 
-    private void loadStaticConfig() throws IOException {
+    private void loadStaticConfig(boolean loadOpensearch) throws IOException {
+
+        String staticRolesResourceName = "/static_config/static_roles.yml";
+        String staticActionGroupsResourceName = "/static_config/static_action_groups.yml";
+        String staticTenantsResourceName = "/static_config/static_tenants.yml";
+
+        if(loadOpensearch) {
+            staticRolesResourceName = "/static_config/static_roles_os.yml";
+            staticActionGroupsResourceName = "/static_config/static_action_groups_os.yml";
+        }
+
         JsonNode staticRolesJsonNode = DefaultObjectMapper.YAML_MAPPER
-                .readTree(DynamicConfigFactory.class.getResourceAsStream("/static_config/static_roles.yml"));
+                .readTree(DynamicConfigFactory.class.getResourceAsStream(staticRolesResourceName));
         staticRoles = SecurityDynamicConfiguration.fromNode(staticRolesJsonNode, CType.ROLES, 2, 0, 0);
 
         JsonNode staticActionGroupsJsonNode = DefaultObjectMapper.YAML_MAPPER
-                .readTree(DynamicConfigFactory.class.getResourceAsStream("/static_config/static_action_groups.yml"));
+                .readTree(DynamicConfigFactory.class.getResourceAsStream(staticActionGroupsResourceName));
         staticActionGroups = SecurityDynamicConfiguration.fromNode(staticActionGroupsJsonNode, CType.ACTIONGROUPS, 2, 0, 0);
 
         JsonNode staticTenantsJsonNode = DefaultObjectMapper.YAML_MAPPER
-                .readTree(DynamicConfigFactory.class.getResourceAsStream("/static_config/static_tenants.yml"));
+                .readTree(DynamicConfigFactory.class.getResourceAsStream(staticTenantsResourceName));
         staticTenants = SecurityDynamicConfiguration.fromNode(staticTenantsJsonNode, CType.TENANTS, 2, 0, 0);
     }
 
@@ -139,14 +149,14 @@ public class DynamicConfigFactory implements Initializable, ConfigurationChangeL
 
         if(opensearchSettings.getAsBoolean(ConfigConstants.SECURITY_UNSUPPORTED_LOAD_STATIC_RESOURCES, true)) {
             try {
-                loadStaticConfig();
+                loadStaticConfig(opensearchSettings.getAsBoolean(ConfigConstants.SECURITY_LOAD_DASHBOARDS_STATICS, true));
             } catch (IOException e) {
                 throw new StaticResourceException("Unable to load static resources due to "+e, e);
             }
         } else {
             log.info("Static resources will not be loaded.");
         }
-        
+
         registerDCFListener(this.iab);
         this.cr.subscribeOnChange(this);
     }
