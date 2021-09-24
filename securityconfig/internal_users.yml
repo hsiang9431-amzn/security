@@ -17,16 +17,16 @@ admin:
   - "admin"
   description: "Demo admin user"
 
-kibanaserver:
+opensearch_dashboards_server:
   hash: "$2a$12$4AcgAt3xwOWadA5s5blL6ev39OXDNhmOesEoo33eZtrq2N0YrU3H."
   reserved: true
   description: "Demo OpenSearch Dashboards user"
 
-kibanaro:
+opensearch_dashboards_ro:
   hash: "$2a$12$JJSXNfTowz7Uu5ttXfeYpeYE0arACvcwlPBStB1F.MI7f0U9Z4DGC"
   reserved: false
   backend_roles:
-  - "kibanauser"
+  - "opensearch_dashboards_user"
   - "readall"
   attributes:
     attribute1: "value1"

@@ -27,11 +27,11 @@ logstash:
   backend_roles:
   - "logstash"
 
-kibana_user:
+opensearch_dashboards_user:
   reserved: false
   backend_roles:
-  - "kibanauser"
-  description: "Maps kibanauser to kibana_user"
+  - "opensearch_dashboards_user"
+  description: "Maps opensearch_dashboards_user to opensearch_dashboards_user"
 
 readall:
   reserved: false
@@ -43,7 +43,7 @@ manage_snapshots:
   backend_roles:
   - "snapshotrestore"
 
-kibana_server:
+opensearch_dashboards_server:
   reserved: true
   users:
-  - "kibanaserver"
+  - "opensearch_dashboards_server"
